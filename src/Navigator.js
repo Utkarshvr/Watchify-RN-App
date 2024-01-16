@@ -18,6 +18,8 @@ export default function Navigator() {
       screenOptions={{
         tabBarStyle: {
           backgroundColor: bgColor,
+          borderTopWidth: 0,
+          elevation: 0,
         },
         headerStyle: {
           backgroundColor: bgColor,
@@ -45,7 +47,6 @@ export default function Navigator() {
           }}
         />
       ))}
-      <Ionicons name={"layou"} />
     </Tabs>
   );
 }
