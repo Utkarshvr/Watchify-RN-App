@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 export const AuthContextData = createContext({
-  isAuthorized: false,
+  isAuth: false,
   user: null,
   authToken: null,
   isLoading: false,

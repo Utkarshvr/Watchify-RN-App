@@ -3,7 +3,7 @@ import { router } from "expo-router";
 
 import axiosInstance from "../utils/axiosInstance";
 import { useAuthAPI } from "../context/AuthContext";
-import { deleteStorage } from "../utils/helpers";
+import PropTypes from "prop-types";
 
 const AxiosInterceptor = ({ children }) => {
   const { reset } = useAuthAPI();
@@ -13,12 +13,6 @@ const AxiosInterceptor = ({ children }) => {
 
     const errorInterceptor = async (error) => {
       if ((error.response && error.response.status === 401) || error.response.status === 403) {
-        // Remove the default Authorizaiton Token from the axios instance
-        axiosInstance.defaults.headers.common["Authorization"] = "";
-
-        // Delete the auth token from Async Storage
-        await deleteStorage("authToken");
-
         // Reset the states
         reset();
 
@@ -34,6 +28,10 @@ const AxiosInterceptor = ({ children }) => {
   }, []);
 
   return <>{children}</>;
+};
+
+AxiosInterceptor.propTypes = {
+  children: PropTypes.element,
 };
 
 export default AxiosInterceptor;

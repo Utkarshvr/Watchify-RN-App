@@ -1,6 +1,14 @@
 import { Tabs } from "expo-router";
 import useBGColor from "./hooks/useBGColor";
 import { Ionicons } from "@expo/vector-icons";
+import UserAvatar from "./components/ui/avatar/UserAvatar";
+
+const tabs = [
+  { name: "index", icon: { fill: "home", outline: "home-outline" } },
+  { name: "studio", icon: { fill: "analytics", outline: "analytics-outline" } },
+  { name: "subscriptions", icon: { fill: "library", outline: "library-outline" } },
+  { name: "you", CustomIcon: UserAvatar },
+];
 
 export default function Navigator() {
   const { bgColor, textColor } = useBGColor();
@@ -8,32 +16,36 @@ export default function Navigator() {
   return (
     <Tabs
       screenOptions={{
-        tabBarItemStyle: {
-          marginBottom: 10,
-          marginTop: 10,
-        },
         tabBarStyle: {
-          height: 70,
           backgroundColor: bgColor,
         },
         headerStyle: {
           backgroundColor: bgColor,
         },
+
         headerTitleStyle: { color: textColor },
         headerShown: false,
 
         tabBarActiveTintColor: textColor,
+        tabBarLabelStyle: { display: "none" },
       }}
     >
-      <Tabs.Screen
-        // Name of the dynamic route.
-        name="index"
-        options={{
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? "home" : "home-outline"} size={size} color={color} />
-          ),
-        }}
-      />
+      {tabs.map(({ name, icon, CustomIcon }) => (
+        <Tabs.Screen
+          // Name of the dynamic route.
+          name={name}
+          key={name}
+          options={{
+            tabBarIcon: ({ color, size, focused }) =>
+              CustomIcon ? (
+                <CustomIcon focused={focused} size={size} color={color} />
+              ) : (
+                <Ionicons name={focused ? icon?.fill : icon?.outline} size={size} color={color} />
+              ),
+          }}
+        />
+      ))}
+      <Ionicons name={"layou"} />
     </Tabs>
   );
 }

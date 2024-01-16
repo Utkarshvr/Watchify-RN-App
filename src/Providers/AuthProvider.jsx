@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { getStorage } from "../utils/helpers";
+import { getStorage, logoutUser } from "../utils/helpers";
 import axiosInstance from "../utils/axiosInstance";
 import { AuthContextAPI, AuthContextData } from "../context/AuthContext";
+import { getUserRoute } from "../utils/api/api.routes";
+import PropTypes from "prop-types";
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -13,6 +15,8 @@ export default function AuthProvider({ children }) {
       setUser(null);
       setIsLoading(false);
       setAuthToken(null);
+
+      logoutUser();
     };
 
     return { setAuthToken, setUser, setIsLoading, reset };
@@ -28,14 +32,14 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     if (authToken) {
-      // setIsLoading(true);
-      // getUser()
-      //   .then((data) => {
-      //     console.log(data?.data?.user?.email);
-      //     setUser(data?.data?.user);
-      //   })
-      //   .catch(api.reset)
-      //   .finally(() => setIsLoading(false));
+      setIsLoading(true);
+      axiosInstance
+        .get(getUserRoute)
+        .then(({ data }) => {
+          setUser(data?.data?.user);
+        })
+        .catch(api.reset)
+        .finally(() => setIsLoading(false));
     } else {
       console.log("Auth Token not present. Therefore, Not fetching user");
     }
@@ -43,9 +47,13 @@ export default function AuthProvider({ children }) {
 
   return (
     <>
-      <AuthContextData.Provider value={{ user, isLoading, authToken, isAuthorized: !!user }}>
+      <AuthContextData.Provider value={{ user, isLoading, authToken, isAuth: !!user }}>
         <AuthContextAPI.Provider value={api}>{children}</AuthContextAPI.Provider>
       </AuthContextData.Provider>
     </>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.element,
+};
