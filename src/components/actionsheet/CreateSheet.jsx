@@ -26,6 +26,7 @@ export default function CreateSheet() {
         action="secondary"
         onPress={handleClose}
         onLongPress={handleClose}
+        size="lg"
       >
         <ButtonIcon as={AddIcon} />
       </Button>

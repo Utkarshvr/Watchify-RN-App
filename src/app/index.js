@@ -1,19 +1,18 @@
-import { Box, Divider, Heading, Text } from "@gluestack-ui/themed";
+import { Box, Divider, Heading } from "@gluestack-ui/themed";
 import useBGColor from "../hooks/useBGColor";
-import { useAuthData } from "../context/AuthContext";
+import VideoFeed from "../components/feed/VideoFeed";
 
 export default function Home() {
   const { bgColor } = useBGColor();
 
-  const { user } = useAuthData();
   return (
-    <Box flex={1} backgroundColor={bgColor} p={"$3"}>
-      <Heading>All</Heading>
-      <Divider />
-      <Box gap={8} mt={"$2"}>
-        <Text>HOME</Text>
-        <Text>{user?.name}</Text>
+    <Box flex={1} backgroundColor={bgColor} gap={2}>
+      <Box p="$2" gap={2}>
+        <Heading>All</Heading>
+        <Divider />
       </Box>
+
+      <VideoFeed />
     </Box>
   );
 }
