@@ -3,6 +3,7 @@ import useBGColor from "./hooks/useBGColor";
 import { Ionicons } from "@expo/vector-icons";
 import UserAvatar from "./components/ui/avatar/UserAvatar";
 import CreateSheet from "./components/actionsheet/CreateSheet";
+import Header from "./components/core/Header";
 
 const tabs = [
   { name: "index", icon: { fill: "home", outline: "home-outline" } },
@@ -11,6 +12,8 @@ const tabs = [
   { name: "subscriptions", icon: { fill: "library", outline: "library-outline" } },
   { name: "you", CustomIcon: UserAvatar },
 ];
+
+const hiddenTabs = [{ name: "video/[videoID]" }];
 
 export default function Navigator() {
   const { bgColor, textColor } = useBGColor();
@@ -28,10 +31,11 @@ export default function Navigator() {
         },
 
         headerTitleStyle: { color: textColor },
-        headerShown: false,
+        headerShown: true,
 
         tabBarActiveTintColor: textColor,
         tabBarLabelStyle: { display: "none" },
+        header: () => <Header />,
       }}
     >
       {tabs.map(({ name, icon, CustomIcon, isButton }) => (
@@ -54,6 +58,9 @@ export default function Navigator() {
                 }),
           }}
         />
+      ))}
+      {hiddenTabs.map(({ name }) => (
+        <Tabs.Screen key={name} name={name} options={{ href: null, headerShown: false }} />
       ))}
     </Tabs>
   );

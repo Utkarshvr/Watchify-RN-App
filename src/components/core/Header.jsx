@@ -2,8 +2,10 @@ import Logo from "../brand/Logo";
 import { BellIcon, Box, Button, ButtonIcon, SearchIcon } from "@gluestack-ui/themed";
 import LoginBtn from "../Button/LoginBtn";
 import LogoutBtn from "../Button/LogoutBtn";
+import useBGColor from "../../hooks/useBGColor";
 
 export default function Header() {
+  const { bgColor } = useBGColor();
   return (
     <Box
       gap={4}
@@ -12,6 +14,7 @@ export default function Header() {
       paddingHorizontal={"$4"}
       justifyContent="space-between"
       alignItems="flex-start"
+      bgColor={bgColor}
     >
       <Logo />
 

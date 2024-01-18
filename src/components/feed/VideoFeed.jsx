@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { FlatList } from "@gluestack-ui/themed";
+import { Center, FlatList, Spinner, Text } from "@gluestack-ui/themed";
 import VideoCard from "../card/VideoCard";
 import axiosInstance from "../../utils/axiosInstance";
 import { GET_ALL_VIDEOS_ROUTE } from "../../utils/api/api.routes";
+import Loading from "../ui/Loading";
 
 export default function VideoFeed({ type = "all" }) {
   const [videos, setVideos] = useState([]);
@@ -25,6 +26,8 @@ export default function VideoFeed({ type = "all" }) {
   useEffect(() => {
     if (!isLoading) loadVideos();
   }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <FlatList
