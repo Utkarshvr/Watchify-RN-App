@@ -6,8 +6,6 @@ import useBGColor from "../../hooks/useBGColor";
 import IconBtn from "../Button/IconBtn";
 
 export default function Header({ navigation, layout, options, route }) {
-  console.log({ route, navigation });
-
   const { bgColor } = useBGColor();
 
   const canGoBack = navigation.canGoBack();
