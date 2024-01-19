@@ -15,12 +15,23 @@ export default function Header({ navigation, layout, options, route }) {
       gap={4}
       flexDirection="row"
       paddingVertical="$2"
-      paddingHorizontal={"$4"}
+      paddingHorizontal={"$2"}
       justifyContent="space-between"
       alignItems="flex-start"
       bgColor={bgColor}
     >
-      {canGoBack ? <IconBtn onPress={() => navigation.goBack()} name={"chevron-back"} /> : <Logo />}
+      {canGoBack ? (
+        <IconBtn
+          noPadding
+          iconSize={24}
+          variant="link"
+          size="md"
+          onPress={() => navigation.goBack()}
+          name={"chevron-back"}
+        />
+      ) : (
+        <Logo />
+      )}
 
       <Box flexDirection="row" gap="$4" alignItems="center">
         <Button rounded="$full" size="xl" variant="link" action="secondary">

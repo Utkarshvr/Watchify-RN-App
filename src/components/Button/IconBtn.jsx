@@ -7,19 +7,21 @@ import { config } from "@gluestack-ui/config";
 export default function IconBtn({
   name,
   size = "xs",
+  iconSize = 16,
   rounded = true,
   BtnText = null,
   variant = "outline",
   action = "secondary",
   iconType = "Ionicons",
   onPress = () => {},
+  noPadding = false,
 }) {
   const { textColor } = useBGColor();
 
   const initialColor = config.tokens.colors.secondary400;
   const [btnColor, setBtnColor] = useState(initialColor);
 
-  const paddingHorizontal = rounded ? (size === "xs" ? "$2" : "$3") : "$2";
+  const paddingHorizontal = noPadding ? 0 : rounded ? (size === "xs" ? "$2" : "$3") : "$2";
 
   let Icon = Ionicons;
 
@@ -53,7 +55,7 @@ export default function IconBtn({
       size={size}
       gap={"$1"}
     >
-      <Icon name={name} size={16} color={btnColor} />
+      <Icon name={name} size={iconSize} color={btnColor} />
       {BtnText && (
         <ButtonText color={btnColor} size={size} mt={size === "xs" ? "$0.5" : null}>
           {BtnText}

@@ -16,11 +16,11 @@ export default function VideoCard({ video }) {
   const [btnColor, setBtnColor] = useState(initialColor);
 
   function navigateToVideo() {
-    router.push(`video/${video?.videoID}`);
+    router.push(`/video/${video?.videoID}`);
   }
 
   function navigateToChannel() {
-    router.push(`channel/${video?.creator?._id}`);
+    router.push(`/channel/${video?.creator?._id}`);
   }
 
   return (

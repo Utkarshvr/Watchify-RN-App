@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocalSearchParams, useNavigation } from "expo-router";
+import { Link, router, useLocalSearchParams, useNavigation } from "expo-router";
 import axiosInstance from "../../utils/axiosInstance";
 import useBGColor from "../../hooks/useBGColor";
 import Loading from "../../components/ui/Loading";
@@ -22,7 +22,7 @@ import LinkSheet from "../../components/actionsheet/LinkSheet";
 export default function ChannelDetails() {
   const { channelID } = useLocalSearchParams();
 
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const [channelInfo, setChannelInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +48,13 @@ export default function ChannelDetails() {
   };
 
   const openDescScreen = () => {
-    navigation.navigate("description", { desc: channelInfo?.desc });
+    // navigation.navigate("description", { desc: channelInfo?.desc });
+    router.push({
+      pathname: "/description",
+      params: {
+        desc: channelInfo?.desc,
+      },
+    });
   };
 
   useEffect(() => {

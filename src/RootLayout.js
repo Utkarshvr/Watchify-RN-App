@@ -1,5 +1,6 @@
 import App from "./App";
-import Navigator from "./Navigator";
+import TabNavigator from "./TabNavigator";
+import StackNavigator from "./StackNavigator";
 import AuthProvider from "./Providers/AuthProvider";
 import AxiosInterceptor from "./Providers/AxiosInterceptor";
 import GluestackUIProvider from "./Providers/GluestackUIProvider";
@@ -10,7 +11,7 @@ export default function RootLayout() {
       <AuthProvider>
         <AxiosInterceptor>
           <App>
-            <Navigator />
+            <StackNavigator />
           </App>
         </AxiosInterceptor>
       </AuthProvider>

@@ -1,6 +1,6 @@
 import { Image, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 import { formatDistanceToNow } from "date-fns";
 import { Box, Button, ButtonIcon, ButtonText, ChevronDownIcon, Text } from "@gluestack-ui/themed";
@@ -99,13 +99,15 @@ export default function VideoDetails() {
           </Box>
         </TouchableOpacity>
         <Box flexDirection="row" justifyContent="space-between">
-          <Box flexDirection="row" gap={"$2"} alignItems="center">
-            <Image source={{ uri: video?.creator?.picture }} style={{ height: 40, width: 40, borderRadius: 9999 }} />
-            <Text fontSize={"$xs"}>{video?.creator?.name}</Text>
-            <Text fontSize={"$xs"} color="$secondary400">
-              {"(3)"}
-            </Text>
-          </Box>
+          <TouchableOpacity onPress={() => router.push(`/channel/${video?.creator?._id}`)}>
+            <Box flexDirection="row" gap={"$2"} alignItems="center">
+              <Image source={{ uri: video?.creator?.picture }} style={{ height: 40, width: 40, borderRadius: 9999 }} />
+              <Text fontSize={"$xs"}>{video?.creator?.name}</Text>
+              <Text fontSize={"$xs"} color="$secondary400">
+                {"(3)"}
+              </Text>
+            </Box>
+          </TouchableOpacity>
           <Button
             // variant="outline"
             size="xs"

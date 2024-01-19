@@ -1,12 +1,12 @@
 import { Box, Text } from "@gluestack-ui/themed";
-import useBGColor from "../hooks/useBGColor";
+import useBGColor from "../../hooks/useBGColor";
 
-export default function You() {
+export default function subscriptions() {
   const { bgColor } = useBGColor();
 
   return (
     <Box flex={1} backgroundColor={bgColor} p={"$3"}>
-      <Text>You</Text>
+      <Text>Subscriptions</Text>
     </Box>
   );
 }

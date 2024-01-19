@@ -13,13 +13,14 @@ const tabs = [
   { name: "you", CustomIcon: UserAvatar },
 ];
 
-const hiddenTabs = [
-  { name: "video/[videoID]", headerShown: false },
-  { name: "channel/[channelID]", headerShown: true },
-  { name: "description", headerShown: true },
-];
+// const hiddenTabs = [
+//   { name: "video/[videoID]", headerShown: false },
+//   { name: "channel/[channelID]", headerShown: true },
+//   { name: "description", headerShown: true },
+// ];
+const hiddenTabs = [];
 
-export default function Navigator() {
+export default function TabNavigator() {
   const { bgColor, textColor } = useBGColor();
 
   return (
@@ -65,9 +66,11 @@ export default function Navigator() {
           }}
         />
       ))}
-      {hiddenTabs.map(({ name, headerShown }) => (
-        <Tabs.Screen key={name} name={name} options={{ href: null, headerShown }} />
-      ))}
+      {/* {hiddenTabs.length > 0
+        ? hiddenTabs.map(({ name, headerShown }) => (
+            <Tabs.Screen key={name} name={name} options={{ href: null, headerShown }} />
+          ))
+        : null} */}
     </Tabs>
   );
 }

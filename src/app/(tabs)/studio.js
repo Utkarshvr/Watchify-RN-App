@@ -1,5 +1,5 @@
 import { Box, Text } from "@gluestack-ui/themed";
-import useBGColor from "../hooks/useBGColor";
+import useBGColor from "../../hooks/useBGColor";
 
 export default function studio() {
   const { bgColor } = useBGColor();
