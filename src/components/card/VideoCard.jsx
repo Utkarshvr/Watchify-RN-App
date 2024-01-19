@@ -19,6 +19,10 @@ export default function VideoCard({ video }) {
     router.push(`video/${video?.videoID}`);
   }
 
+  function navigateToChannel() {
+    router.push(`channel/${video?.creator?._id}`);
+  }
+
   return (
     <TouchableOpacity onPress={navigateToVideo}>
       <Box flex={1}>
@@ -32,13 +36,15 @@ export default function VideoCard({ video }) {
 
         <Box flex={1} p={"$2"} gap={8} flexDirection="row">
           {/* Link to Channel */}
-          <Image
-            width={36}
-            height={36}
-            source={{ uri: video?.creator?.picture }}
-            alt="You"
-            style={{ borderRadius: 999 }}
-          />
+          <TouchableOpacity onPress={navigateToChannel}>
+            <Image
+              width={36}
+              height={36}
+              source={{ uri: video?.creator?.picture }}
+              alt="You"
+              style={{ borderRadius: 999 }}
+            />
+          </TouchableOpacity>
           <Box flex={1} flexDirection="row" alignItems="center" justifyContent="space-between">
             <Box gap={4}>
               <Text>{video?.title}</Text>

@@ -13,7 +13,11 @@ const tabs = [
   { name: "you", CustomIcon: UserAvatar },
 ];
 
-const hiddenTabs = [{ name: "video/[videoID]" }];
+const hiddenTabs = [
+  { name: "video/[videoID]", headerShown: false },
+  { name: "channel/[channelID]", headerShown: true },
+  { name: "description", headerShown: true },
+];
 
 export default function Navigator() {
   const { bgColor, textColor } = useBGColor();
@@ -35,7 +39,9 @@ export default function Navigator() {
 
         tabBarActiveTintColor: textColor,
         tabBarLabelStyle: { display: "none" },
-        header: () => <Header />,
+        header: ({ navigation, layout, options, route }) => (
+          <Header navigation={navigation} layout={layout} options={options} route={route} />
+        ),
       }}
     >
       {tabs.map(({ name, icon, CustomIcon, isButton }) => (
@@ -59,8 +65,8 @@ export default function Navigator() {
           }}
         />
       ))}
-      {hiddenTabs.map(({ name }) => (
-        <Tabs.Screen key={name} name={name} options={{ href: null, headerShown: false }} />
+      {hiddenTabs.map(({ name, headerShown }) => (
+        <Tabs.Screen key={name} name={name} options={{ href: null, headerShown }} />
       ))}
     </Tabs>
   );

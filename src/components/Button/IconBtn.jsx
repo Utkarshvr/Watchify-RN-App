@@ -12,6 +12,7 @@ export default function IconBtn({
   variant = "outline",
   action = "secondary",
   iconType = "Ionicons",
+  onPress = () => {},
 }) {
   const { textColor } = useBGColor();
 
@@ -44,6 +45,7 @@ export default function IconBtn({
     <Button
       action={action}
       variant={variant}
+      onPress={onPress}
       onPressIn={() => setBtnColor(textColor)}
       onPressOut={() => setBtnColor(initialColor)}
       rounded={rounded ? "$full" : `$${size}`}

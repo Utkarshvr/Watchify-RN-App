@@ -3,9 +3,15 @@ import { BellIcon, Box, Button, ButtonIcon, SearchIcon } from "@gluestack-ui/the
 import LoginBtn from "../Button/LoginBtn";
 import LogoutBtn from "../Button/LogoutBtn";
 import useBGColor from "../../hooks/useBGColor";
+import IconBtn from "../Button/IconBtn";
 
-export default function Header() {
+export default function Header({ navigation, layout, options, route }) {
+  console.log({ route, navigation });
+
   const { bgColor } = useBGColor();
+
+  const canGoBack = navigation.canGoBack();
+
   return (
     <Box
       gap={4}
@@ -16,7 +22,7 @@ export default function Header() {
       alignItems="flex-start"
       bgColor={bgColor}
     >
-      <Logo />
+      {canGoBack ? <IconBtn onPress={() => navigation.goBack()} name={"chevron-back"} /> : <Logo />}
 
       <Box flexDirection="row" gap="$4" alignItems="center">
         <Button rounded="$full" size="xl" variant="link" action="secondary">
