@@ -12,6 +12,7 @@ import useBGColor from "../../hooks/useBGColor";
 import VideoCardActions from "../../components/action/VideoCardActions";
 import VideoDescSheet from "../../components/actionsheet/VideoDescSheet";
 import VideoComments from "../../components/VideoComments";
+import { useAuthData } from "../../context/AuthContext";
 
 export default function VideoDetails() {
   const { videoID } = useLocalSearchParams();
@@ -46,6 +47,9 @@ export default function VideoDetails() {
   useEffect(() => {
     if (videoID) loadVideo();
   }, [videoID]);
+
+  const { isAuth } = useAuthData();
+  console.log({ isAuth });
 
   if (isLoading) return <Loading />;
 

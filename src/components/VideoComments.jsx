@@ -4,12 +4,16 @@ import axiosInstance from "../utils/axiosInstance";
 import { Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CommentsSheet from "./actionsheet/CommentsSheet";
+import { useAuthData } from "../context/AuthContext";
 
 export default function VideoComments({ videoUUID }) {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  const { isAuth } = useAuthData();
+  console.log("VIDEO COMMENTS", { isAuth });
 
   const loadComments = async () => {
     if (isLoading || !videoUUID) return;
@@ -49,7 +53,13 @@ export default function VideoComments({ videoUUID }) {
         </Box>
       </TouchableOpacity>
 
-      <CommentsSheet isSheetOpen={isSheetOpen} setIsSheetOpen={setIsSheetOpen} comments={comments} />
+      <CommentsSheet
+        videoUUID={videoUUID}
+        isSheetOpen={isSheetOpen}
+        setIsSheetOpen={setIsSheetOpen}
+        comments={comments}
+        loadComments={loadComments}
+      />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { Entypo, EvilIcons, Ionicons } from "@expo/vector-icons";
-import { Button, ButtonText } from "@gluestack-ui/themed";
+import { Button, ButtonSpinner, ButtonText } from "@gluestack-ui/themed";
 import useBGColor from "../../hooks/useBGColor";
 import { useState } from "react";
 import { config } from "@gluestack-ui/config";
@@ -15,6 +15,9 @@ export default function IconBtn({
   iconType = "Ionicons",
   onPress = () => {},
   noPadding = false,
+  isLoading = false,
+  isDisabled = false,
+
 }) {
   const { textColor } = useBGColor();
 
@@ -54,8 +57,9 @@ export default function IconBtn({
       paddingHorizontal={paddingHorizontal}
       size={size}
       gap={"$1"}
+      isDisabled={isDisabled}
     >
-      <Icon name={name} size={iconSize} color={btnColor} />
+      {isLoading ? <ButtonSpinner mr="$1" /> : <Icon name={name} size={iconSize} color={btnColor} />}
       {BtnText && (
         <ButtonText color={btnColor} size={size} mt={size === "xs" ? "$0.5" : null}>
           {BtnText}
