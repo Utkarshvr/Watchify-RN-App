@@ -6,8 +6,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import IconBtn from "../Button/IconBtn";
+import { useAuthData } from "../../context/AuthContext";
 
 export default function CommentCard({ comment }) {
+  const { isAuth } = useAuthData();
+  console.log("Comment Card: ", isAuth);
+
   return (
     <>
       <Box p="$2" flex={1} gap={"$2"} flexDirection="row" alignItems="center" w="$full" justifyContent="space-between">
