@@ -10,8 +10,6 @@ export default function VideoProvider({ children, videoID }) {
 
   const videoUUID = video?._id || null;
 
-  console.log({ videoID });
-
   const loadVideo = async () => {
     if (isLoading || !videoID) return;
 
@@ -19,7 +17,6 @@ export default function VideoProvider({ children, videoID }) {
     setIsLoading(true);
     try {
       const { data } = await axiosInstance.get(`/video/${videoID}`);
-      // console.log(data);
 
       setVideo(data?.video);
     } catch (error) {

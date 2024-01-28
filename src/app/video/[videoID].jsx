@@ -1,10 +1,9 @@
 import { Image, TouchableOpacity } from "react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 
 import { formatDistanceToNow } from "date-fns";
 import { Box, Button, ButtonIcon, ButtonText, ChevronDownIcon, Text } from "@gluestack-ui/themed";
-import axiosInstance from "../../utils/axiosInstance";
 
 import { Video, ResizeMode } from "expo-av";
 import Loading from "../../components/ui/Loading";
@@ -12,46 +11,40 @@ import useBGColor from "../../hooks/useBGColor";
 import VideoCardActions from "../../components/action/VideoCardActions";
 import VideoDescSheet from "../../components/actionsheet/VideoDescSheet";
 import VideoComments from "../../components/VideoComments";
-import { useAuthData } from "../../context/AuthContext";
+import CommentsProvider from "../../Providers/CommentsProvider";
+import VideoProvider from "../../Providers/VideoProvider";
+import { useVideoData } from "../../context/VideoContext";
+import ErrorScreen from "../../components/ui/ErrorScreen";
 
-export default function VideoDetails() {
+export default function MainProviderWrapper() {
   const { videoID } = useLocalSearchParams();
+  console.log({ videoID });
 
-  const [video, setVideo] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  return (
+    <>
+      <VideoProvider videoID={videoID}>
+        <CommentsProvider>
+          <VideoScreen />
+        </CommentsProvider>
+      </VideoProvider>
+    </>
+  );
+}
+
+export function VideoScreen() {
+  const { video, isLoading } = useVideoData();
 
   const [isDescSheetOpen, setIsDescSheetOpen] = useState(false);
 
   const { bgColor } = useBGColor();
 
-  const loadVideo = async () => {
-    if (isLoading || !videoID) return;
-
-    setIsLoading(true);
-    try {
-      const { data } = await axiosInstance.get(`/video/${videoID}`);
-      // console.log(data);
-
-      setVideo(data?.video);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const openDescSheet = () => {
     setIsDescSheetOpen(true);
   };
 
-  useEffect(() => {
-    if (videoID) loadVideo();
-  }, [videoID]);
-
-  const { isAuth } = useAuthData();
-  console.log({ isAuth });
-
   if (isLoading) return <Loading />;
+
+  if (!isLoading && !video) return <ErrorScreen msg="Video not found" />;
 
   return (
     <Box flex={1} bgColor={bgColor}>
@@ -125,9 +118,9 @@ export default function VideoDetails() {
       </Box>
 
       <Box p="$2">
-        <VideoComments videoUUID={video?._id} />
+        <VideoComments />
       </Box>
-      <VideoDescSheet desc={video?.desc} isDescSheetOpen={isDescSheetOpen} setIsDescSheetOpen={setIsDescSheetOpen} />
+      <VideoDescSheet isDescSheetOpen={isDescSheetOpen} setIsDescSheetOpen={setIsDescSheetOpen} />
     </Box>
   );
 }

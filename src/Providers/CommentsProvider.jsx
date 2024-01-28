@@ -11,8 +11,10 @@ export default function CommentsProvider({ children }) {
 
   const { videoUUID } = useVideoData();
 
-  const loadComments = async () => {
+  const loadComments = async (videoUUID) => {
     if (isLoading || !videoUUID) return;
+
+    console.log("LOADING COMMENTS...👽👽");
 
     setIsLoading(true);
     try {
@@ -33,11 +35,11 @@ export default function CommentsProvider({ children }) {
       setIsLoading(false);
     };
 
-    return { setComments, setIsLoading, reset };
+    return { setComments, setIsLoading, loadComments, reset };
   }, []);
 
   useEffect(() => {
-    if (videoUUID && !isLoading) loadComments();
+    if (videoUUID && !isLoading) loadComments(videoUUID);
   }, [videoUUID]);
 
   return (

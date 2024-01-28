@@ -5,9 +5,6 @@ export const CommentsContextData = createContext({
 
   comments: [],
   isLoading: false,
-
-  //   isError: false,
-  //   error: null,
 });
 
 export const CommentsContextAPI = createContext({
@@ -15,6 +12,7 @@ export const CommentsContextAPI = createContext({
   setIsLoading: () => {},
 
   reset: () => {},
+  loadComments: () => {},
 });
 
 export const useCommentsData = () => useContext(CommentsContextData);

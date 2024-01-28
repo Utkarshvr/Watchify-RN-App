@@ -11,14 +11,19 @@ import { Dimensions } from "react-native";
 import { renderDescription } from "../../utils/UIhelpers";
 
 import PropTypes from "prop-types";
+import { useVideoData } from "../../context/VideoContext";
 
-export default function VideoDescSheet({ desc, setIsDescSheetOpen, isDescSheetOpen }) {
+export default function VideoDescSheet({ setIsDescSheetOpen, isDescSheetOpen }) {
+  const { video } = useVideoData();
+
+  const desc = video?.desc;
+
   const handleClose = () => {
     setIsDescSheetOpen(false);
   };
 
   const windowHeight = Dimensions.get("window").height;
-  console.log({ windowHeight });
+
   return (
     <Actionsheet isOpen={isDescSheetOpen} onClose={handleClose} zIndex={999}>
       <ActionsheetBackdrop />
@@ -37,7 +42,6 @@ export default function VideoDescSheet({ desc, setIsDescSheetOpen, isDescSheetOp
 }
 
 VideoDescSheet.propTypes = {
-  desc: PropTypes.string,
   isDescSheetOpen: PropTypes.bool,
   setIsDescSheetOpen: PropTypes.func,
 };

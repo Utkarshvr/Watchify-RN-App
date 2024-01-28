@@ -13,20 +13,24 @@ import PropTypes from "prop-types";
 import CommentCard from "../card/CommentCard";
 import CommentModal from "../modal/CommentModal";
 import { useAuthData } from "../../context/AuthContext";
+import { useCommentsAPI, useCommentsData } from "../../context/CommentsContext";
 
 const windowHeight = Dimensions.get("window").height;
 
-export default function CommentsSheet({ loadComments, comments, setIsSheetOpen, isSheetOpen, videoUUID }) {
+export default function CommentsSheet({ setIsSheetOpen, isSheetOpen }) {
+  const { comments, videoUUID } = useCommentsData();
+  const { loadComments } = useCommentsAPI();
+
   const handleClose = () => {
     setIsSheetOpen(false);
   };
   const { isAuth, user } = useAuthData();
-  console.log("Sheet", { isAuth });
+
+  if (comments?.length === 0) return;
 
   return (
     <Actionsheet
       isKeyboardDismissable={true}
-      // style={{ position: "absolute", bottom: -40, left: 0 }}
       snapPoints={[95]}
       flex={1}
       isOpen={isSheetOpen}
@@ -39,7 +43,6 @@ export default function CommentsSheet({ loadComments, comments, setIsSheetOpen, 
           <ActionsheetDragIndicator />
         </ActionsheetDragIndicatorWrapper>
 
-        {/* <KeyboardAvoidingView enabled={false} > */}
         <Box p={"$2"} gap={"$2"} flex={1} w={"$full"}>
           <Heading>Comments</Heading>
           <FlatList
@@ -50,16 +53,14 @@ export default function CommentsSheet({ loadComments, comments, setIsSheetOpen, 
             renderItem={({ item }) => <CommentCard comment={item} />}
           />
 
-          <CommentModal loadComments={loadComments} isAuth={isAuth} user={user} videoUUID={videoUUID} />
+          <CommentModal videoUUID={videoUUID} loadComments={loadComments} isAuth={isAuth} user={user} />
         </Box>
-        {/* </KeyboardAvoidingView> */}
       </ActionsheetContent>
     </Actionsheet>
   );
 }
 
 CommentsSheet.propTypes = {
-  comments: PropTypes.array.isRequired,
   isSheetOpen: PropTypes.bool.isRequired,
   setIsSheetOpen: PropTypes.func.isRequired,
 };

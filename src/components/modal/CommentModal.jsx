@@ -4,14 +4,9 @@ import { Input } from "@gluestack-ui/themed";
 import { Image, TouchableOpacity } from "react-native";
 import IconBtn from "../Button/IconBtn";
 import axiosInstance from "../../utils/axiosInstance";
-import { useLocalSearchParams } from "expo-router";
-import { useAuthData } from "../../context/AuthContext";
 
-export default function CommentModal({ loadComments, parentCommentID = null, user, isAuth, videoUUID }) {
+export default function CommentModal({ videoUUID, loadComments, parentCommentID = null, user, isAuth }) {
   const [isUserCommenting, setIsUserCommenting] = useState(false);
-
-  // const { isAuth, user } = useAuthData();
-  console.log("MODAL", { isAuth });
 
   const [comment, setComment] = useState(null);
   const [isPostingComment, setIsPostingComment] = useState(false);
@@ -25,20 +20,20 @@ export default function CommentModal({ loadComments, parentCommentID = null, use
         ? `/video/${videoUUID}/comment?parentCommentID=${parentCommentID}`
         : `/video/${videoUUID}/comment`;
 
-      const data = await axiosInstance.post(url, {
+      const { data } = await axiosInstance.post(url, {
         content: comment,
       });
       console.log(data);
       // refreshComments();
       // if (isReply) hideCommentForm();
-      setComment("");
-    } catch (error) {
-      console.log(error);
-      // errorAPI("Couldn't add reply");
-    } finally {
-      loadComments();
       setIsPostingComment(false);
       setIsUserCommenting(false);
+      loadComments(videoUUID);
+
+      setComment("");
+    } catch (error) {
+      console.log(JSON.stringify(error));
+      // errorAPI("Couldn't add reply");
     }
   };
   return (
