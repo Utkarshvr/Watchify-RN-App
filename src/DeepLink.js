@@ -12,7 +12,7 @@ export default function DeepLink() {
       (url) =>
         url &&
         handleOpenURL(url.url).then((authToken) => {
-          // console.log({ TOKEN___AFTER___LOGIN: authToken });
+          console.log({ TOKEN___AFTER___LOGIN: authToken });
           setAuthToken(authToken || null);
         }),
     );
