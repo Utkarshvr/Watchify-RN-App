@@ -5,6 +5,7 @@ import { saveStorage } from "../helpers";
 
 export function openLoginUrl() {
   // Linking.openURL(`${API_URL}/auth/mobile/google/callback`);
+  console.log(API_URL)
   Linking.openURL(`${API_URL}/auth/google/callback`);
 }
 

@@ -1,12 +1,18 @@
-import { Box, Text } from "@gluestack-ui/themed";
+import { Box } from "@gluestack-ui/themed";
 import useBGColor from "../../hooks/useBGColor";
+import SubscriptionProvider from "../../Providers/SubscriptionProvider";
+import SubscriptionList from "../../components/subscriptions/SubscriptionList";
+import SubscriptionVideos from "../../components/subscriptions/SubscriptionVideos";
 
 export default function subscriptions() {
   const { bgColor } = useBGColor();
 
   return (
-    <Box flex={1} backgroundColor={bgColor} p={"$3"}>
-      <Text>Subscriptions</Text>
-    </Box>
+    <SubscriptionProvider>
+      <Box flex={1} backgroundColor={bgColor}>
+        <SubscriptionList />
+        <SubscriptionVideos />
+      </Box>
+    </SubscriptionProvider>
   );
 }
