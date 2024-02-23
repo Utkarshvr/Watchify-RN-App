@@ -3,6 +3,7 @@ import { useSubscriptionData } from "../../context/SubscriptionContext";
 import { Box, Button, ButtonText, FlatList, Text } from "@gluestack-ui/themed";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import useBGColor from "../../hooks/useBGColor";
+import { router } from "expo-router";
 
 export default function SubscriptionList() {
   const { subscriptions } = useSubscriptionData();
@@ -41,6 +42,7 @@ export default function SubscriptionList() {
         height="$full"
         width={"$12"}
         variant="link"
+        onPress={() => router.push("/subscription-list")}
       >
         <ButtonText>All</ButtonText>
       </Button>

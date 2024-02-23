@@ -18,6 +18,7 @@ import { Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ChevronsRightIcon } from "@gluestack-ui/themed";
 import LinkSheet from "../../components/actionsheet/LinkSheet";
+import SubscribeChannelBtn from "../../components/action/SubscribeChannelBtn";
 
 export default function ChannelDetails() {
   const { channelID } = useLocalSearchParams();
@@ -60,6 +61,8 @@ export default function ChannelDetails() {
   useEffect(() => {
     if (channelID) loadChannel();
   }, [channelID]);
+
+  console.log({ channelInfo });
 
   if (isLoading || !channelInfo) return <Loading />;
 
@@ -135,6 +138,7 @@ export default function ChannelDetails() {
         </Box>
 
         {/* Subscriber Btn */}
+        <SubscribeChannelBtn channel={channelInfo} />
 
         {/* Tabs: (Videos, Playlist) */}
 

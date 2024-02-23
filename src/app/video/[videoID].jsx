@@ -15,6 +15,7 @@ import CommentsProvider from "../../Providers/CommentsProvider";
 import VideoProvider from "../../Providers/VideoProvider";
 import { useVideoData } from "../../context/VideoContext";
 import ErrorScreen from "../../components/ui/ErrorScreen";
+import SubscribeChannelBtn from "../../components/action/SubscribeChannelBtn";
 
 export default function MainProviderWrapper() {
   const { videoID } = useLocalSearchParams();
@@ -105,13 +106,14 @@ export function VideoScreen() {
               </Text>
             </Box>
           </TouchableOpacity>
-          <Button
+          {/* <Button
             // variant="outline"
             size="xs"
             rounded={"$3xl"}
           >
             <ButtonText>Subscribe</ButtonText>
-          </Button>
+          </Button> */}
+          <SubscribeChannelBtn channel={video?.creator} />
         </Box>
         {/* Actions */}
         <VideoCardActions />
