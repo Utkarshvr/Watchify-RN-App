@@ -4,6 +4,7 @@ import LoginBtn from "../Button/LoginBtn";
 import LogoutBtn from "../Button/LogoutBtn";
 import useBGColor from "../../hooks/useBGColor";
 import IconBtn from "../Button/IconBtn";
+import { router } from "expo-router";
 
 export default function Header({ navigation, layout, options, route }) {
   const { bgColor } = useBGColor();
@@ -37,7 +38,13 @@ export default function Header({ navigation, layout, options, route }) {
         <Button rounded="$full" size="xl" variant="link" action="secondary">
           <ButtonIcon as={BellIcon} />
         </Button>
-        <Button rounded="$full" size="xl" variant="link" action="secondary">
+        <Button
+          onPress={() => router.push("/(tabs)/search")}
+          rounded="$full"
+          size="xl"
+          variant="link"
+          action="secondary"
+        >
           <ButtonIcon as={SearchIcon} />
         </Button>
         <LoginBtn showText={false} />
