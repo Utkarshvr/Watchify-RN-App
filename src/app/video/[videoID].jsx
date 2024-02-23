@@ -106,13 +106,6 @@ export function VideoScreen() {
               </Text>
             </Box>
           </TouchableOpacity>
-          {/* <Button
-            // variant="outline"
-            size="xs"
-            rounded={"$3xl"}
-          >
-            <ButtonText>Subscribe</ButtonText>
-          </Button> */}
           <SubscribeChannelBtn channel={video?.creator} />
         </Box>
         {/* Actions */}
