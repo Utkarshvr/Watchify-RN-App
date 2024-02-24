@@ -6,14 +6,14 @@ import CreateSheet from "./components/actionsheet/CreateSheet";
 import Header from "./components/core/Header";
 
 const tabs = [
-  { name: "index", icon: { fill: "home", outline: "home-outline" } },
+  { name: "home", icon: { fill: "home", outline: "home-outline" } },
   { name: "studio", icon: { fill: "analytics", outline: "analytics-outline" }, hideHeader: true },
   { name: "create", CustomIcon: CreateSheet, isButton: true },
   { name: "subscriptions", icon: { fill: "library", outline: "library-outline" } },
   { name: "you", CustomIcon: UserAvatar },
 ];
 
-const hiddenTabs = ["rough", "search"];
+const hiddenTabs = ["rough", "index"];
 
 export default function TabNavigator() {
   const { bgColor, textColor } = useBGColor();
@@ -31,7 +31,7 @@ export default function TabNavigator() {
         },
 
         headerTitleStyle: { color: textColor },
-        headerShown: true,
+        headerShown: false,
 
         tabBarActiveTintColor: textColor,
         tabBarLabelStyle: { display: "none" },
@@ -58,7 +58,7 @@ export default function TabNavigator() {
                       <Ionicons name={focused ? icon?.fill : icon?.outline} size={size} color={color} />
                     ),
                 }),
-            headerShown: !hideHeader,
+            // headerShown: !hideHeader,
           }}
         />
       ))}

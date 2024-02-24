@@ -1,5 +1,6 @@
 import { Box, Divider, Heading } from "@gluestack-ui/themed";
-import useBGColor from "../../hooks/useBGColor";
+import useBGColor from "../../../hooks/useBGColor";
+import VideoFeed from "../../../components/feed/VideoFeed";
 
 export default function Home() {
   const { bgColor } = useBGColor();
@@ -7,9 +8,11 @@ export default function Home() {
   return (
     <Box flex={1} backgroundColor={bgColor} gap={2}>
       <Box p="$2" gap={2}>
-        <Heading>Search</Heading>
+        <Heading>All</Heading>
         <Divider />
       </Box>
+
+      <VideoFeed />
     </Box>
   );
 }
