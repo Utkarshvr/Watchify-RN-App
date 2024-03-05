@@ -145,7 +145,7 @@ export default function Header({ navigation, layout, options, route }) {
             </Button>
 
             <LoginBtn showText={false} />
-            <LogoutBtn showText={false} />
+            {/* <LogoutBtn showText={false} /> */}
           </Box>
         </>
       )}

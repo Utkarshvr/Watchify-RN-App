@@ -17,11 +17,10 @@ export default function IconBtn({
   noPadding = false,
   isLoading = false,
   isDisabled = false,
-
+  initialColor = config.tokens.colors.secondary400,
 }) {
   const { textColor } = useBGColor();
 
-  const initialColor = config.tokens.colors.secondary400;
   const [btnColor, setBtnColor] = useState(initialColor);
 
   const paddingHorizontal = noPadding ? 0 : rounded ? (size === "xs" ? "$2" : "$3") : "$2";
@@ -48,7 +47,7 @@ export default function IconBtn({
 
   return (
     <Button
-      action={action}
+      action={"default"}
       variant={variant}
       onPress={onPress}
       onPressIn={() => setBtnColor(textColor)}

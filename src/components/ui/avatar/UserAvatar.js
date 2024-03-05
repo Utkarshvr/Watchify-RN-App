@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import PropTypes from "prop-types";
 import useBGColor from "../../../hooks/useBGColor";
+import { Image } from "react-native";
 
 export default function UserAvatar({ focused, size, color }) {
   const { user, isAuth } = useAuthData();
@@ -12,13 +13,15 @@ export default function UserAvatar({ focused, size, color }) {
 
   return isAuth ? (
     <>
-      <AvatarImage
+      <Image
         width={size}
         height={size}
         source={{ uri: user?.picture }}
-        borderColor={focused ? textColor : null}
-        borderWidth={"$2"}
-        rounded={"$full"}
+        style={{
+          borderColor: focused ? textColor : null,
+          borderWidth: 1,
+          borderRadius: 9999,
+        }}
         alt="You"
       />
     </>
