@@ -17,7 +17,6 @@ export default function SubscriptionList() {
         horizontal
         keyExtractor={(subscription) => subscription?._id}
         renderItem={({ item }) => {
-          console.log({ uri: item?.channel?.picture });
           return (
             <TouchableOpacity>
               <Box maxWidth={48} mr={12} alignItems="center">

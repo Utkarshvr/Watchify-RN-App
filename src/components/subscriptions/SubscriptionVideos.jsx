@@ -4,7 +4,7 @@ import { useSubscriptionData } from "../../context/SubscriptionContext";
 
 export default function SubscriptionVideos() {
   const { videos } = useSubscriptionData();
-  console.log({ videos });
+  // console.log({ videos });
   return (
     <FlatList
       data={videos}
