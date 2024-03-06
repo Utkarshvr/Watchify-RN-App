@@ -1,19 +1,22 @@
 import { Box, Text } from "@gluestack-ui/themed";
 import { Image } from "react-native";
 import IconBtn from "../Button/IconBtn";
-import { config } from "@gluestack-ui/config";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 
 export default function PlaylistCard({ playlist, fillGap }) {
   return (
-    <Box mr={fillGap && "$2"} flex={1}>
+    <Box mr={fillGap && "$2"} maxWidth={140}>
       <Box position="relative">
-        <Image
-          source={{ uri: playlist?.videos[0]?.thumbnail }}
-          alt="Thumbnail"
-          style={{ width: "100%", height: 80, minWidth: 140 }}
-        />
-        {playlist?.isDefault ? (
+        {playlist?.videos[0]?.thumbnail ? (
+          <Image
+            source={{ uri: playlist?.videos[0]?.thumbnail }}
+            alt="Thumbnail"
+            style={{ width: "100%", height: 80, minWidth: 140 }}
+          />
+        ) : (
+          <Box style={{ height: 80, width: 140 }} />
+        )}
+        {playlist?.isDefault || playlist?.videos?.length === 0 ? (
           <Box
             position="absolute"
             top={0}
@@ -28,7 +31,11 @@ export default function PlaylistCard({ playlist, fillGap }) {
               {playlist?.isDefault && playlist?.title === "Liked Videos" ? (
                 <Ionicons name={"thumbs-up"} size={20} color={"#fff"} />
               ) : (
-                <Entypo name={"clock"} size={20} color={"#fff"} />
+                <Entypo
+                  name={playlist?.isDefault && playlist?.title === "Watch Later" ? "clock" : "list"}
+                  size={20}
+                  color={"#fff"}
+                />
               )}
               <Text>{playlist?.videos?.length}</Text>
             </Box>
@@ -55,7 +62,9 @@ export default function PlaylistCard({ playlist, fillGap }) {
 
       <Box flexDirection="row" alignItems="center" justifyContent="space-between">
         <Box>
-          <Text>{playlist?.title}</Text>
+          <Text numberOfLines={1} ellipsizeMode="tail">
+            {playlist?.title}
+          </Text>
           <Text size="xs" color="$secondary400">
             {playlist?.isPrivate ? "Private" : "Public"}
           </Text>

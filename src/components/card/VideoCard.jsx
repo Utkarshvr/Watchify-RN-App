@@ -66,21 +66,23 @@ export default function VideoCard({ video, usage, size }) {
                 {" | "}
                 {video?.createdAt && formatDistanceToNow(video?.createdAt, { addSuffix: true })}
               </Text>
-              <Box flexDirection="row" gap={"$3"}>
-                <Ionicons
-                  name={video?.isPublic ? "earth-outline" : "lock-closed-outline"}
-                  size={16}
-                  color={textColor}
-                />
-                <Box flexDirection="row" gap={"$1"}>
-                  <Ionicons name="thumbs-up-outline" size={16} color={textColor} />
-                  <Text size="xs">{video?.likes_count}</Text>
+              {usage === "my-videos" && (
+                <Box flexDirection="row" gap={"$3"}>
+                  <Ionicons
+                    name={video?.isPublic ? "earth-outline" : "lock-closed-outline"}
+                    size={16}
+                    color={textColor}
+                  />
+                  <Box flexDirection="row" gap={"$1"}>
+                    <Ionicons name="thumbs-up-outline" size={16} color={textColor} />
+                    <Text size="xs">{video?.likes_count}</Text>
+                  </Box>
+                  <Box flexDirection="row" gap={"$1"}>
+                    <Ionicons name="chatbox-ellipses-outline" size={16} color={textColor} />
+                    <Text size="xs">0</Text>
+                  </Box>
                 </Box>
-                <Box flexDirection="row" gap={"$1"}>
-                  <Ionicons name="chatbox-ellipses-outline" size={16} color={textColor} />
-                  <Text size="xs">0</Text>
-                </Box>
-              </Box>
+              )}
             </Box>
 
             {/* Action Buttons */}
