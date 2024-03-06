@@ -5,11 +5,12 @@ import { useAuthData } from "../../context/AuthContext";
 export default function SubscribeChannelBtn({ CustomButton, channel }) {
   const { isSubscribed, subscribeChannel, subscribersCount, isSubscribing } = useSubscribeChannel({ channel });
   const { user, isAuth } = useAuthData();
+  console.log({ user, channel });
 
   if (!isAuth) return;
 
   // if it's your channel, don't show the button to subscribe
-  if (user?.id === channel?.id) return;
+  if (user?._id === channel?._id) return;
 
   return (
     <>
