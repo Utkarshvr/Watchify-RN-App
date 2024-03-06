@@ -47,7 +47,7 @@ export default function IconBtn({
 
   return (
     <Button
-      action={"default"}
+      action={action}
       variant={variant}
       onPress={onPress}
       onPressIn={() => setBtnColor(textColor)}
