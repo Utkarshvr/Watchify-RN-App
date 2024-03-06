@@ -33,8 +33,8 @@ export default function VideoCard({ video, usage, size }) {
           alt="Thumbnail"
           style={{
             // width: "100%",
-            minWidth: size === "xs" ? 140 : "auto",
-            width: size === "xs" ? 140 : "auto",
+            minWidth: size === "xs" ? 140 : "100%",
+            width: size === "xs" ? 140 : "100%",
             height: size === "xs" ? 80 : 230,
             minHeight: size === "xs" ? 80 : 230,
             maxHeight: 230,
