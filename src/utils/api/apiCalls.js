@@ -1,10 +1,10 @@
 import axiosInstance, { API_URL } from "../axiosInstance";
 
-import { Linking } from "react-native";
+import * as WebBrowser from "expo-web-browser";
 import { saveStorage } from "../helpers";
 
-export function openLoginUrl() {
-  Linking.openURL(`${API_URL}/auth/google?source=mobile`);
+export async function openLoginUrl() {
+  await WebBrowser.openBrowserAsync(`${API_URL}/auth/google?source=mobile`);
 }
 
 export const handleOpenURL = async (url) => {
