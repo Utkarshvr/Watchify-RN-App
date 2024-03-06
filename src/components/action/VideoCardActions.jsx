@@ -1,7 +1,7 @@
 import { Box } from "@gluestack-ui/themed";
-import IconBtn from "../Button/IconBtn";
 import LikeVideoBtn from "./LikeVideoBtn";
 import ShareBtn from "./ShareBtn";
+import SaveVideoBtn from "./SaveVideoBtn";
 
 export default function VideoCardActions() {
   return (
@@ -11,7 +11,7 @@ export default function VideoCardActions() {
       {/* Share */}
       <ShareBtn />
       {/* Save */}
-      <IconBtn name={"save-outline"} BtnText={"Save"} />
+      <SaveVideoBtn />
     </Box>
   );
 }
