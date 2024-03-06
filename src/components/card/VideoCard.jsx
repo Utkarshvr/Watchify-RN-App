@@ -2,14 +2,14 @@ import PropTypes from "prop-types";
 import { Box, Button, Image, Text } from "@gluestack-ui/themed";
 
 import { formatDistanceToNow } from "date-fns";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import useBGColor from "../../hooks/useBGColor";
 import { config } from "@gluestack-ui/config";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 
-export default function VideoCard({ video }) {
+export default function VideoCard({ video, usage, size }) {
   const { textColor } = useBGColor();
 
   const initialColor = config.tokens.colors.secondary400;
@@ -23,38 +23,64 @@ export default function VideoCard({ video }) {
     router.push(`/channel/${video?.creator?._id}`);
   }
 
+  if (!video) return;
+
   return (
     <TouchableOpacity onPress={navigateToVideo}>
-      <Box flex={1}>
+      <Box flexDirection={size === "xs" ? "row" : "column"} alignItems="center" justifyContent="center">
         <Image
           source={{ uri: video?.thumbnail }}
           alt="Thumbnail"
-          style={{ width: "100%", height: 230, minHeight: 230, maxHeight: 230 }}
+          style={{
+            // width: "100%",
+            minWidth: size === "xs" ? 140 : "auto",
+            width: size === "xs" ? 140 : "auto",
+            height: size === "xs" ? 80 : 230,
+            minHeight: size === "xs" ? 80 : 230,
+            maxHeight: 230,
+          }}
           objectFit="fill"
-          flex={1}
+          flex={0.05}
         />
 
-        <Box flex={1} p={"$2"} gap={8} flexDirection="row">
+        <Box p={"$2"} flex={0.95} gap={8} flexDirection="row">
           {/* Link to Channel */}
-          <TouchableOpacity onPress={navigateToChannel}>
-            <Image
-              width={36}
-              height={36}
-              source={{ uri: video?.creator?.picture }}
-              alt="You"
-              style={{ borderRadius: 999 }}
-            />
-          </TouchableOpacity>
+          {usage !== "my-videos" && (
+            <TouchableOpacity onPress={navigateToChannel}>
+              <Image
+                width={36}
+                height={36}
+                source={{ uri: video?.creator?.picture }}
+                alt="You"
+                style={{ borderRadius: 999 }}
+              />
+            </TouchableOpacity>
+          )}
           <Box flex={1} flexDirection="row" alignItems="center" justifyContent="space-between">
             <Box gap={4}>
-              <Text>{video?.title}</Text>
+              <Text size={size || "md"}>{video?.title}</Text>
               <Text size="xs" color="$secondary400">
-                {video?.creator?.name}
-                {" | "}
+                {usage !== "my-videos" && video?.creator?.name}
+                {usage !== "my-videos" && " | "}
                 {video?.views_count ? video?.views_count + " views" : null}
                 {" | "}
                 {video?.createdAt && formatDistanceToNow(video?.createdAt, { addSuffix: true })}
               </Text>
+              <Box flexDirection="row" gap={"$3"}>
+                <Ionicons
+                  name={video?.isPublic ? "earth-outline" : "lock-closed-outline"}
+                  size={16}
+                  color={textColor}
+                />
+                <Box flexDirection="row" gap={"$1"}>
+                  <Ionicons name="thumbs-up-outline" size={16} color={textColor} />
+                  <Text size="xs">{video?.likes_count}</Text>
+                </Box>
+                <Box flexDirection="row" gap={"$1"}>
+                  <Ionicons name="chatbox-ellipses-outline" size={16} color={textColor} />
+                  <Text size="xs">0</Text>
+                </Box>
+              </Box>
             </Box>
 
             {/* Action Buttons */}
