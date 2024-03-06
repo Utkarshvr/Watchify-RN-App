@@ -4,15 +4,18 @@ import StackNavigator from "./StackNavigator";
 import AuthProvider from "./Providers/AuthProvider";
 import AxiosInterceptor from "./Providers/AxiosInterceptor";
 import GluestackUIProvider from "./Providers/GluestackUIProvider";
+import CreatePlaylistModalProvider from "./Providers/CreatePlaylistModalProvider";
 
 export default function RootLayout() {
   return (
     <GluestackUIProvider>
       <AuthProvider>
         <AxiosInterceptor>
-          <App>
-            <StackNavigator />
-          </App>
+          <CreatePlaylistModalProvider>
+            <App>
+              <StackNavigator />
+            </App>
+          </CreatePlaylistModalProvider>
         </AxiosInterceptor>
       </AuthProvider>
     </GluestackUIProvider>

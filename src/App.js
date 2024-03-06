@@ -4,6 +4,7 @@ import { Box } from "@gluestack-ui/themed";
 import useBGColor from "./hooks/useBGColor";
 // import Header from "./components/core/Header";
 import DeepLink from "./DeepLink";
+import CreatePlaylistModal from "./components/modal/CreatePlaylistModal";
 
 const { StatusBarManager } = NativeModules;
 
@@ -16,7 +17,7 @@ export default function App({ children }) {
     <Box flex={1} backgroundColor={bgColor}>
       <DeepLink />
       <StatusBar backgroundColor={bgColor} />
-
+      <CreatePlaylistModal />
       <Box marginTop={STATUSBAR_HEIGHT} flex={1}>
         {/* <Header /> */}
         {children}

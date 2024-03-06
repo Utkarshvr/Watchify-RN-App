@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { ActionsheetIcon, AddIcon, ButtonText, Divider } from "@gluestack-ui/themed";
+import { ActionsheetFlatList, ActionsheetIcon, AddIcon, ButtonText, Divider, FlatList } from "@gluestack-ui/themed";
 import { CheckIcon } from "@gluestack-ui/themed";
 import { Button, ButtonIcon, CopyIcon, Heading, Text } from "@gluestack-ui/themed";
 import {
@@ -22,6 +22,8 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { useVideoData } from "../../context/VideoContext";
 import Loading from "../ui/Loading";
+import CreatePlaylistBtn from "../Button/CreatePlaylistBtn";
+import { useCreatePlaylistModal } from "../../context/CreatePlaylistModalContext";
 
 export default function SaveToPlaylistSheet({ isSheetOpen, setIsSheetOpen }) {
   // HOOKS
@@ -92,69 +94,73 @@ export default function SaveToPlaylistSheet({ isSheetOpen, setIsSheetOpen }) {
     }
   };
 
-  console.log({
-    selectedPlaylists,
-    playlists: playlists?.map((e) => e?._id),
-  });
-
+  const { showModal, open } = useCreatePlaylistModal();
+  console.log({ playlists: playlists?.length });
   return (
     <Box>
       <Actionsheet isOpen={isSheetOpen} onClose={handleClose} zIndex={999}>
         <ActionsheetBackdrop />
-        <ActionsheetContent h="$56" zIndex={999}>
+        <ActionsheetContent h="$96" zIndex={999}>
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator />
           </ActionsheetDragIndicatorWrapper>
-
-          <Box flex={1} w={"$full"} justifyContent="space-between">
-            <Box flexDirection="column">
-              <Box py={"$1"} flexDirection="row" alignItems="center" justifyContent="space-between">
-                <Text>Save video to...</Text>
-                <Button size="xs" variant="link">
-                  <ButtonIcon as={AddIcon} size="sm" />
-                  <ButtonText>New playlist</ButtonText>
-                </Button>
-              </Box>
-              <Divider />
+          <Box width={"$full"}>
+            <Box py={"$1"} flexDirection="row" alignItems="center" justifyContent="space-between">
+              <Text>Save video to...</Text>
+              <Button
+                onPress={() => {
+                  showModal();
+                  handleClose();
+                }}
+                size="xs"
+                variant="link"
+              >
+                <ButtonIcon as={AddIcon} size="sm" />
+                <ButtonText>New playlist</ButtonText>
+              </Button>
             </Box>
-            {isLoading ? (
-              <Box px="$2" alignItems="center" justifyContent="center">
-                <Loading />
-              </Box>
-            ) : (
-              <Box py="$4" px="$2" gap={"$3"}>
-                {playlists?.map((plyl) => (
-                  <TouchableOpacity key={plyl?._id} onPress={() => handleSelect(plyl?._id)}>
-                    <Box flexDirection="row" alignItems="center" justifyContent="space-between">
-                      <Checkbox
-                        aria-label={plyl?.title}
-                        size="md"
-                        isChecked={selectedPlaylists?.some((e) => e === plyl?._id)}
-                      >
-                        <CheckboxIndicator mr="$2">
-                          <CheckboxIcon as={CheckIcon} />
-                        </CheckboxIndicator>
-                        <CheckboxLabel>{plyl?.title}</CheckboxLabel>
-                      </Checkbox>
+            <Divider />
+          </Box>
 
-                      <Ionicons
-                        name={!plyl?.isPrivate ? "earth-outline" : "lock-closed-outline"}
-                        size={16}
-                        color={textColor}
-                      />
-                    </Box>
-                  </TouchableOpacity>
-                ))}
-              </Box>
-            )}
-            <Box>
-              <Divider />
+          <ActionsheetFlatList
+            data={playlists}
+            // py={"$2"}
+            my={"$2"}
+            keyExtractor={(plyl) => plyl?._id}
+            renderItem={({ item: plyl }) => {
+              return (
+                <TouchableOpacity onPress={() => handleSelect(plyl?._id)}>
+                  <Box mb={"$2"} flexDirection="row" alignItems="center" justifyContent="space-between">
+                    <Checkbox
+                      flex={0.9}
+                      aria-label={plyl?.title}
+                      size="md"
+                      isChecked={selectedPlaylists?.some((e) => e === plyl?._id)}
+                    >
+                      <CheckboxIndicator mr="$2">
+                        <CheckboxIcon as={CheckIcon} />
+                      </CheckboxIndicator>
+                      <CheckboxLabel>{plyl?.title}</CheckboxLabel>
+                    </Checkbox>
 
-              <ActionsheetItem onPress={handleClose}>
-                <ButtonIcon as={CheckIcon} color="$white" />
-                <ActionsheetItemText>Done</ActionsheetItemText>
-              </ActionsheetItem>
-            </Box>
+                    <Ionicons
+                      name={!plyl?.isPrivate ? "earth-outline" : "lock-closed-outline"}
+                      size={16}
+                      color={textColor}
+                    />
+                  </Box>
+                </TouchableOpacity>
+              );
+            }}
+          />
+
+          <Box width={"$full"}>
+            <Divider />
+
+            <ActionsheetItem onPress={handleClose}>
+              <ButtonIcon as={CheckIcon} color="$white" />
+              <ActionsheetItemText>Done</ActionsheetItemText>
+            </ActionsheetItem>
           </Box>
         </ActionsheetContent>
       </Actionsheet>
