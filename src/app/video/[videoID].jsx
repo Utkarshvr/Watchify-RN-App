@@ -19,7 +19,7 @@ import SubscribeChannelBtn from "../../components/action/SubscribeChannelBtn";
 
 export default function MainProviderWrapper() {
   const { videoID } = useLocalSearchParams();
-  console.log({ videoID });
+  // console.log({ videoID });
 
   return (
     <>

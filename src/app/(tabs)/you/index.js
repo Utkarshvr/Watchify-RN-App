@@ -43,7 +43,7 @@ export default function You() {
     }
   }, [user]);
 
-  console.log({ my_videos: videos });
+  // console.log({ my_videos: videos });
 
   return (
     <Box flex={1} backgroundColor={bgColor} p={"$3"} gap={"$5"}>

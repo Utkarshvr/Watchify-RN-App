@@ -5,6 +5,7 @@ import useBGColor from "./hooks/useBGColor";
 // import Header from "./components/core/Header";
 import DeepLink from "./DeepLink";
 import CreatePlaylistModal from "./components/modal/CreatePlaylistModal";
+import LoadingOverlay from "./components/ui/LoadingOverlay";
 
 const { StatusBarManager } = NativeModules;
 
@@ -18,6 +19,7 @@ export default function App({ children }) {
       <DeepLink />
       <StatusBar backgroundColor={bgColor} />
       <CreatePlaylistModal />
+      <LoadingOverlay />
       <Box marginTop={STATUSBAR_HEIGHT} flex={1}>
         {/* <Header /> */}
         {children}

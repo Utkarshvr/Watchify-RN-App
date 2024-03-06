@@ -4,11 +4,12 @@ import PropTypes from "prop-types";
 
 import useBGColor from "../../hooks/useBGColor";
 import { openLoginUrl } from "../../utils/api/apiCalls";
-import { useAuthData } from "../../context/AuthContext";
+import { useAuthAPI, useAuthData } from "../../context/AuthContext";
 
 export default function LoginBtn({ onLogin = openLoginUrl, showText = true }) {
   const { textColor } = useBGColor();
 
+  const { setIsLoading } = useAuthAPI();
   const { isAuth } = useAuthData();
 
   if (isAuth) return;
@@ -21,7 +22,10 @@ export default function LoginBtn({ onLogin = openLoginUrl, showText = true }) {
       paddingVertical={"$2"}
       action="secondary"
       variant="outline"
-      onPress={onLogin}
+      onPress={() => {
+        setIsLoading(true);
+        onLogin();
+      }}
     >
       <Ionicons name="logo-google" size={20} color={textColor} />
       {showText && <ButtonText>Login</ButtonText>}

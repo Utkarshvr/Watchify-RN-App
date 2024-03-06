@@ -36,6 +36,7 @@ export default function AuthProvider({ children }) {
       axiosInstance
         .get(getUserRoute)
         .then(({ data }) => {
+          console.log("👽👽👽👽👽 GOT THE USER 👽👽👽👽👽");
           setUser(data?.data?.user);
         })
         .catch(api.reset)
