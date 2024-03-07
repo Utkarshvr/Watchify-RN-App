@@ -94,8 +94,8 @@ export default function SaveToPlaylistSheet({ isSheetOpen, setIsSheetOpen }) {
     }
   };
 
-  const { showModal, open } = useCreatePlaylistModal();
-  console.log({ playlists: playlists?.length });
+  const { showModal } = useCreatePlaylistModal();
+
   return (
     <Box>
       <Actionsheet isOpen={isSheetOpen} onClose={handleClose} zIndex={999}>
@@ -121,17 +121,19 @@ export default function SaveToPlaylistSheet({ isSheetOpen, setIsSheetOpen }) {
             </Box>
             <Divider />
           </Box>
-
-          <ActionsheetFlatList
-            data={playlists}
-            // py={"$2"}
-            my={"$2"}
-            keyExtractor={(plyl) => plyl?._id}
-            renderItem={({ item: plyl }) => {
-              return (
-                <TouchableOpacity onPress={() => handleSelect(plyl?._id)}>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <ActionsheetFlatList
+              data={playlists}
+              // py={"$2"}
+              my={"$2"}
+              keyExtractor={(plyl) => plyl?._id}
+              renderItem={({ item: plyl }) => {
+                return (
                   <Box mb={"$2"} flexDirection="row" alignItems="center" justifyContent="space-between">
                     <Checkbox
+                      onPress={() => handleSelect(plyl?._id)}
                       flex={0.9}
                       aria-label={plyl?.title}
                       size="md"
@@ -149,10 +151,10 @@ export default function SaveToPlaylistSheet({ isSheetOpen, setIsSheetOpen }) {
                       color={textColor}
                     />
                   </Box>
-                </TouchableOpacity>
-              );
-            }}
-          />
+                );
+              }}
+            />
+          )}
 
           <Box width={"$full"}>
             <Divider />
