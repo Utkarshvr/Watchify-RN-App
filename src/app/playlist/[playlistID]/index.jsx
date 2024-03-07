@@ -82,7 +82,7 @@ export default function index() {
               <Text size="xs">{playlist?.owner?.name}</Text>
               <Box flexDirection="row" alignItems="center" gap={"$2"}>
                 <Text size="xs" color="$secondary400">
-                  {playlist?.videos?.length} {playlist?.videos?.length === 0 ? "video" : "videos"}
+                  {playlist?.videos?.length} {playlist?.videos?.length === 1 ? "video" : "videos"}
                 </Text>
                 <Box flexDirection="row" alignItems="center" gap="$1" justifyContent="center">
                   <Ionicons
