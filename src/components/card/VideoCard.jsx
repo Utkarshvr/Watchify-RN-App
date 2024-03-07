@@ -8,9 +8,11 @@ import { config } from "@gluestack-ui/config";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
+import { useAuthData } from "../../context/AuthContext";
 
 export default function VideoCard({ video, usage, size }) {
   const { textColor } = useBGColor();
+  const { user } = useAuthData();
 
   const initialColor = config.tokens.colors.secondary400;
   const [btnColor, setBtnColor] = useState(initialColor);
@@ -75,11 +77,13 @@ export default function VideoCard({ video, usage, size }) {
               </Text>
               {usage === "my-videos" && (
                 <Box flexDirection="row" gap={"$3"}>
-                  <Ionicons
-                    name={video?.isPublic ? "earth-outline" : "lock-closed-outline"}
-                    size={16}
-                    color={textColor}
-                  />
+                  {user?._id === video?.creator?._id && (
+                    <Ionicons
+                      name={video?.isPublic ? "earth-outline" : "lock-closed-outline"}
+                      size={16}
+                      color={textColor}
+                    />
+                  )}
                   <Box flexDirection="row" gap={"$1"}>
                     <Ionicons name="thumbs-up-outline" size={16} color={textColor} />
                     <Text size="xs">{video?.likes_count}</Text>
