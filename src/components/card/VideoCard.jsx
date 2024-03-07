@@ -38,11 +38,12 @@ export default function VideoCard({ video, usage, size }) {
           alt="Thumbnail"
           style={{
             // width: "100%",
-            minWidth: size === "xs" ? 140 : "100%",
-            width: size === "xs" ? 140 : "100%",
-            height: size === "xs" ? 80 : 230,
-            minHeight: size === "xs" ? 80 : 230,
+            minWidth: size === "xs" ? 150 : "100%",
+            width: size === "xs" ? 150 : "100%",
+            height: size === "xs" ? 90 : 230,
+            minHeight: size === "xs" ? 90 : 230,
             maxHeight: 230,
+            borderRadius: 12,
           }}
           objectFit="fill"
           flex={0.05}

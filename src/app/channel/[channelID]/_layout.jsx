@@ -1,29 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link, router, useLocalSearchParams, useNavigation } from "expo-router";
-import axiosInstance from "../../utils/axiosInstance";
-import useBGColor from "../../hooks/useBGColor";
-import Loading from "../../components/ui/Loading";
-import {
-  Box,
-  Button,
-  ButtonIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  Heading,
-  Image,
-  LinkText,
-  Text,
-} from "@gluestack-ui/themed";
+import { Link, router, useLocalSearchParams } from "expo-router";
+import axiosInstance from "../../../utils/axiosInstance";
+import useBGColor from "../../../hooks/useBGColor";
+import Loading from "../../../components/ui/Loading";
+import { Box, Button, ButtonIcon, ChevronRightIcon, Heading, Image, LinkText, Text } from "@gluestack-ui/themed";
 import { Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { ChevronsRightIcon } from "@gluestack-ui/themed";
-import LinkSheet from "../../components/actionsheet/LinkSheet";
-import SubscribeChannelBtn from "../../components/action/SubscribeChannelBtn";
+import LinkSheet from "../../../components/actionsheet/LinkSheet";
+import SubscribeChannelBtn from "../../../components/action/SubscribeChannelBtn";
+import ChannelNavigator from "../../../components/Navigators/ChannelNavigator";
 
 export default function ChannelDetails() {
   const { channelID } = useLocalSearchParams();
-
-  // const navigation = useNavigation();
 
   const [channelInfo, setChannelInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +37,6 @@ export default function ChannelDetails() {
   };
 
   const openDescScreen = () => {
-    // navigation.navigate("description", { desc: channelInfo?.desc });
     router.push({
       pathname: "/description",
       params: {
@@ -141,8 +128,7 @@ export default function ChannelDetails() {
         <SubscribeChannelBtn channel={channelInfo} />
 
         {/* Tabs: (Videos, Playlist) */}
-
-        {/* Content (acc to tab) */}
+        <ChannelNavigator />
       </Box>
       <LinkSheet links={channelInfo?.links} isLinkSheetOpen={isLinkSheetOpen} setIsLinkSheetOpen={setIsLinkSheetOpen} />
     </>
