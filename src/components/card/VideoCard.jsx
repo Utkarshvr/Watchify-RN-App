@@ -45,7 +45,7 @@ export default function VideoCard({ video, usage, size }) {
             height: size === "xs" ? 90 : 230,
             minHeight: size === "xs" ? 90 : 230,
             maxHeight: 230,
-            borderRadius: 12,
+            borderRadius: usage === "list" ? 12 : 0,
           }}
           objectFit="fill"
           flex={0.05}
