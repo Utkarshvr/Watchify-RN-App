@@ -6,7 +6,7 @@ import { CommentsContextAPI, CommentsContextData } from "../context/CommentsCont
 import { useVideoData } from "../context/VideoContext";
 
 export default function CommentsProvider({ children }) {
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { videoUUID } = useVideoData();

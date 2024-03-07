@@ -7,6 +7,7 @@ import { VideoContextAPI, VideoContextData } from "../context/VideoContext";
 export default function VideoProvider({ children, videoID }) {
   const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoadDone, setIsInitialLoadDone] = useState(false);
 
   const videoUUID = video?._id || null;
 
@@ -23,6 +24,7 @@ export default function VideoProvider({ children, videoID }) {
       console.log(error);
     } finally {
       setIsLoading(false);
+      setIsInitialLoadDone(true);
     }
   };
 
@@ -41,7 +43,7 @@ export default function VideoProvider({ children, videoID }) {
 
   return (
     <>
-      <VideoContextData.Provider value={{ video, isLoading, videoID, videoUUID }}>
+      <VideoContextData.Provider value={{ video, isLoading, videoID, videoUUID, isInitialLoadDone }}>
         <VideoContextAPI.Provider value={api}>{children}</VideoContextAPI.Provider>
       </VideoContextData.Provider>
     </>

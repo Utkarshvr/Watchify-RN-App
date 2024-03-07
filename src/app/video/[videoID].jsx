@@ -33,7 +33,7 @@ export default function MainProviderWrapper() {
 }
 
 export function VideoScreen() {
-  const { video, isLoading } = useVideoData();
+  const { video, isLoading, isInitialLoadDone } = useVideoData();
 
   const [isDescSheetOpen, setIsDescSheetOpen] = useState(false);
 
@@ -43,9 +43,14 @@ export function VideoScreen() {
     setIsDescSheetOpen(true);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <Box flex={1} bgColor={bgColor}>
+        <Loading />
+      </Box>
+    );
 
-  if (!isLoading && !video) return <ErrorScreen msg="Video not found" />;
+  if (isInitialLoadDone && !isLoading && !video) return <ErrorScreen msg="Video not found" />;
 
   return (
     <Box flex={1} bgColor={bgColor}>

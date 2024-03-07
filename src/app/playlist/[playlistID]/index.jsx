@@ -12,11 +12,11 @@ import Loading from "../../../components/ui/Loading";
 
 export default function index() {
   const { playlistID } = useLocalSearchParams();
-  const { bgColor, textColor } = useBGColor();
+  const { bgColor } = useBGColor();
 
   // States
   const [playlist, setPlaylist] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Error
   const [isError, setIsError] = useState(false);

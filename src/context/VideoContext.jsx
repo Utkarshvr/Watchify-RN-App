@@ -6,6 +6,7 @@ export const VideoContextData = createContext({
 
   video: null,
   isLoading: false,
+  isInitialLoadDone: false,
 
   //   isError: false,
   //   error: null,

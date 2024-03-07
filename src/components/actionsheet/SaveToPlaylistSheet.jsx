@@ -24,10 +24,12 @@ import { useVideoData } from "../../context/VideoContext";
 import Loading from "../ui/Loading";
 import CreatePlaylistBtn from "../Button/CreatePlaylistBtn";
 import { useCreatePlaylistModal } from "../../context/CreatePlaylistModalContext";
+import { useAuthData } from "../../context/AuthContext";
 
 export default function SaveToPlaylistSheet({ isSheetOpen, setIsSheetOpen }) {
   // HOOKS
   const { textColor } = useBGColor();
+  const { isAuth } = useAuthData();
   const { videoUUID } = useVideoData();
 
   const handleClose = () => setIsSheetOpen(false);
@@ -54,7 +56,7 @@ export default function SaveToPlaylistSheet({ isSheetOpen, setIsSheetOpen }) {
   };
 
   useEffect(() => {
-    loadMyPlaylists();
+    if (isAuth) loadMyPlaylists();
   }, [isSheetOpen]);
 
   // THE LOGIC
