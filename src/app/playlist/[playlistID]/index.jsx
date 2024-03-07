@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import VideoCard from "../../../components/card/VideoCard";
 import { config } from "@gluestack-ui/config";
 import ShareBtn from "../../../components/action/ShareBtn";
+import Loading from "../../../components/ui/Loading";
 
 export default function index() {
   const { playlistID } = useLocalSearchParams();
@@ -15,6 +16,7 @@ export default function index() {
 
   // States
   const [playlist, setPlaylist] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Error
   const [isError, setIsError] = useState(false);
@@ -26,23 +28,33 @@ export default function index() {
   const [error, setError] = useState(initialErrorState);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axiosInstance.get(`/playlist/${playlistID}`);
-        console.log(data);
-        setPlaylist(data?.data?.playlist);
-      } catch (error) {
-        console.log(error);
-        setIsError(true);
-        setError({
-          info: error?.response?.data,
-          status_code: error?.response?.data?.statusCode,
-          message: error?.response?.data?.message,
-        });
-      }
-    })();
+    if (playlistID)
+      (async () => {
+        setIsLoading(true);
+        try {
+          const { data } = await axiosInstance.get(`/playlist/${playlistID}`);
+          console.log(data);
+          setPlaylist(data?.data?.playlist);
+        } catch (error) {
+          console.log(error);
+          setIsError(true);
+          setError({
+            info: error?.response?.data,
+            status_code: error?.response?.data?.statusCode,
+            message: error?.response?.data?.message,
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      })();
   }, [playlistID]);
 
+  if (isLoading)
+    return (
+      <Box flex={1} bgColor={bgColor}>
+        <Loading />
+      </Box>
+    );
   if (isError)
     return (
       <Box flex={1} bgColor={bgColor}>
@@ -55,7 +67,11 @@ export default function index() {
     <Box flex={1} bgColor={bgColor} p={"$4"}>
       <Box gap="$4">
         <Image
-          source={{ uri: playlist?.videos[0]?.thumbnail }}
+          source={
+            playlist?.videos[0]?.thumbnail
+              ? { uri: playlist?.videos[0]?.thumbnail }
+              : require("../../../assets/no-thumbnail.jpg")
+          }
           style={{ width: "100%", height: 200, borderRadius: 16 }}
           alt="Playlist Image"
         />
