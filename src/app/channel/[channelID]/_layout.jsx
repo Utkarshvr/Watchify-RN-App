@@ -3,8 +3,18 @@ import { Link, router, useLocalSearchParams } from "expo-router";
 import axiosInstance from "../../../utils/axiosInstance";
 import useBGColor from "../../../hooks/useBGColor";
 import Loading from "../../../components/ui/Loading";
-import { Box, Button, ButtonIcon, ChevronRightIcon, Heading, Image, LinkText, Text } from "@gluestack-ui/themed";
-import { Dimensions } from "react-native";
+import {
+  Box,
+  Button,
+  ButtonIcon,
+  ChevronRightIcon,
+  Heading,
+  Image,
+  LinkText,
+  ScrollView,
+  Text,
+} from "@gluestack-ui/themed";
+import { Dimensions, RefreshControl } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LinkSheet from "../../../components/actionsheet/LinkSheet";
 import SubscribeChannelBtn from "../../../components/action/SubscribeChannelBtn";
@@ -51,11 +61,20 @@ export default function ChannelDetails() {
 
   console.log({ channelInfo });
 
-  if (isLoading || !channelInfo) return <Loading />;
+  if (isLoading || !channelInfo)
+    return (
+      <Box flex={1} bgColor={bgColor}>
+        <Loading />
+      </Box>
+    );
 
   return (
     <>
-      <Box flex={1} bgColor={bgColor}>
+      <ScrollView
+        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={loadChannel} />}
+        flex={1}
+        bgColor={bgColor}
+      >
         {/* banner image */}
         {channelInfo?.banner_image && (
           <Image
@@ -128,8 +147,8 @@ export default function ChannelDetails() {
         <SubscribeChannelBtn channel={channelInfo} />
 
         {/* Tabs: (Videos, Playlist) */}
-        <ChannelNavigator />
-      </Box>
+      </ScrollView>
+      <ChannelNavigator />
       <LinkSheet links={channelInfo?.links} isLinkSheetOpen={isLinkSheetOpen} setIsLinkSheetOpen={setIsLinkSheetOpen} />
     </>
   );
