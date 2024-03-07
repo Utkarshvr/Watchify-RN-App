@@ -27,7 +27,12 @@ export default function VideoCard({ video, usage, size }) {
 
   return (
     <TouchableOpacity onPress={navigateToVideo}>
-      <Box flexDirection={size === "xs" ? "row" : "column"} alignItems="center" justifyContent="center">
+      <Box
+        mb={usage === "list" ? "$4" : "$0"}
+        flexDirection={size === "xs" ? "row" : "column"}
+        alignItems="center"
+        justifyContent="center"
+      >
         <Image
           source={{ uri: video?.thumbnail }}
           alt="Thumbnail"
@@ -45,17 +50,18 @@ export default function VideoCard({ video, usage, size }) {
 
         <Box p={"$2"} flex={0.95} gap={8} flexDirection="row">
           {/* Link to Channel */}
-          {usage !== "my-videos" && (
-            <TouchableOpacity onPress={navigateToChannel}>
-              <Image
-                width={36}
-                height={36}
-                source={{ uri: video?.creator?.picture }}
-                alt="You"
-                style={{ borderRadius: 999 }}
-              />
-            </TouchableOpacity>
-          )}
+          {usage === "my-videos" ||
+            (usage === "list" ? null : (
+              <TouchableOpacity onPress={navigateToChannel}>
+                <Image
+                  width={36}
+                  height={36}
+                  source={{ uri: video?.creator?.picture }}
+                  alt="You"
+                  style={{ borderRadius: 999 }}
+                />
+              </TouchableOpacity>
+            ))}
           <Box flex={1} flexDirection="row" alignItems="center" justifyContent="space-between">
             <Box gap={4}>
               <Text size={size || "md"}>{video?.title}</Text>
@@ -79,7 +85,7 @@ export default function VideoCard({ video, usage, size }) {
                   </Box>
                   <Box flexDirection="row" gap={"$1"}>
                     <Ionicons name="chatbox-ellipses-outline" size={16} color={textColor} />
-                    <Text size="xs">0</Text>
+                    <Text size="xs">{video?.comments_count || 0}</Text>
                   </Box>
                 </Box>
               )}

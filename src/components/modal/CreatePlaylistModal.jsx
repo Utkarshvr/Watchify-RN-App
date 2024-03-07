@@ -51,7 +51,7 @@ export default function CreatePlaylistModal() {
 
   const toast = useToast();
 
-  const { open: isOpen, closeModal: onClose, showModal } = useCreatePlaylistModal();
+  const { open: isOpen, closeModal: onClose, showModal, createNewPlaylist } = useCreatePlaylistModal();
 
   const handleCreatePlaylist = async () => {
     showModal();
@@ -79,6 +79,7 @@ export default function CreatePlaylistModal() {
       console.log("::createplaylist::", data);
 
       resetForm();
+      createNewPlaylist();
       onClose();
       toast.show({
         placement: "bottom",
@@ -97,7 +98,21 @@ export default function CreatePlaylistModal() {
       });
     } catch (error) {
       console.log(error);
-      error("Couldn't create playlist");
+      toast.show({
+        placement: "bottom",
+        render: ({ id }) => {
+          const toastId = "toast-" + id;
+
+          return (
+            <Toast nativeID={toastId} action="error" variant="accent">
+              <VStack space="xs">
+                <ToastTitle>{"Couldn't create playlist"}</ToastTitle>
+                {/* <ToastDescription>Fill in the playlist title</ToastDescription> */}
+              </VStack>
+            </Toast>
+          );
+        },
+      });
     } finally {
       setIsCreating(false);
     }

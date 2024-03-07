@@ -6,9 +6,9 @@ export default function rough() {
     <Box flex={1} bgColor="$secondary950">
       <Text>Rough Screen</Text>
 
-      <Link asChild href={"/test/HoLfQJpc75QZggiV"}>
+      <Link asChild href={"/playlist/HoLfQJpc75QZggiV"}>
         <Button>
-          <ButtonText>Open Test Vid Screen</ButtonText>
+          <ButtonText>Open Playlist</ButtonText>
         </Button>
       </Link>
     </Box>

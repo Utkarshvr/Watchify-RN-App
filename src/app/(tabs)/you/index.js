@@ -10,21 +10,29 @@ import PlaylistCard from "../../../components/card/PlaylistCard";
 import axiosInstance from "../../../utils/axiosInstance";
 import VideoCard from "../../../components/card/VideoCard";
 import { TouchableOpacity } from "react-native";
+import CreatePlaylistBtn from "../../../components/Button/CreatePlaylistBtn";
+import { useCreatePlaylistModal, useCreatePlaylistModalData } from "../../../context/CreatePlaylistModalContext";
+import Loading from "../../../components/ui/Loading";
 
 export default function You() {
   const { bgColor } = useBGColor();
   const { user } = useAuthData();
 
+  const { open } = useCreatePlaylistModal();
+  const { isNewPlaylistCreated } = useCreatePlaylistModalData();
+
   const [videos, setVideos] = useState([]);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
+  console.log("::YOU::", { myVids: videos });
 
   function navigateToChannel() {
     router.push(`/channel/${user?._id}`);
   }
 
-  const { fetchPlaylists, playlists } = useFetchPlaylists();
+  const { playlists, isLoading: isPLaylistLoading, fetchPlaylists, reset: resetPLaylists } = useFetchPlaylists();
 
   const loadMyVideos = async (userID) => {
-    // setIsLoading(true);
+    setIsVideoLoading(true);
 
     try {
       const { data } = await axiosInstance.get(`channel/${userID}/videos`);
@@ -32,7 +40,7 @@ export default function You() {
     } catch (error) {
       console.log(error);
     } finally {
-      // setIsLoading(false);
+      setIsVideoLoading(false);
     }
   };
 
@@ -40,10 +48,11 @@ export default function You() {
     if (user?._id) {
       fetchPlaylists(user?._id);
       loadMyVideos(user?._id);
+    } else {
+      setVideos([]);
+      resetPLaylists();
     }
-  }, [user]);
-
-  // console.log({ my_videos: videos });
+  }, [user, open, isNewPlaylistCreated]);
 
   return (
     <Box flex={1} backgroundColor={bgColor} p={"$3"} gap={"$5"}>
@@ -74,20 +83,25 @@ export default function You() {
       <Box gap="$1">
         <Box flexDirection="row" justifyContent="space-between" alignItems="center">
           <Heading>Your Playlists</Heading>
-          <Button variant="outline" size="xs" action="secondary" rounded={"$3xl"}>
+          {/* <Button variant="outline" size="xs" action="secondary" rounded={"$3xl"}>
             <ButtonText>View all</ButtonText>
-          </Button>
+          </Button> */}
+          <CreatePlaylistBtn variant={"outline"} action="secondary" size="xs" rounded={"$3xl"} />
         </Box>
-        <Box gap={"$1"}>
-          <FlatList
-            data={playlists.sort((a, b) => b.isDefault - a.isDefault)}
-            px={"$1"}
-            horizontal
-            keyExtractor={(playlist) => playlist?._id}
-            renderItem={({ item }) => {
-              return <PlaylistCard playlist={item} fillGap />;
-            }}
-          />
+        <Box gap={"$1"} width={"$full"} minHeight={"$24"}>
+          {isPLaylistLoading ? (
+            <Loading />
+          ) : (
+            <FlatList
+              data={playlists.sort((a, b) => b.isDefault - a.isDefault)}
+              px={"$1"}
+              horizontal
+              keyExtractor={(playlist) => playlist?._id}
+              renderItem={({ item }) => {
+                return <PlaylistCard playlist={item} fillGap />;
+              }}
+            />
+          )}
         </Box>
       </Box>
 
@@ -98,15 +112,19 @@ export default function You() {
             <ButtonText>View all</ButtonText>
           </Button> */}
         </Box>
-        <Box gap={"$1"}>
-          <FlatList
-            data={videos}
-            mb={"$5"}
-            keyExtractor={(vid) => vid?._id}
-            renderItem={({ item }) => {
-              return <VideoCard video={item} size="xs" usage={"my-videos"} />;
-            }}
-          />
+        <Box width={"$full"} minHeight={"$24"}>
+          {isVideoLoading ? (
+            <Loading />
+          ) : (
+            <FlatList
+              data={videos}
+              mb={"$5"}
+              keyExtractor={(vid) => vid?._id}
+              renderItem={({ item }) => {
+                return <VideoCard video={item} size="xs" usage={"my-videos"} />;
+              }}
+            />
+          )}
         </Box>
       </Box>
     </Box>

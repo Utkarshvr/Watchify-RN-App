@@ -13,7 +13,7 @@ const tabs = [
   { name: "you", CustomIcon: UserAvatar },
 ];
 
-const hiddenTabs = ["rough", "index"];
+const hiddenTabs = ["index"];
 
 export default function TabNavigator() {
   const { bgColor, textColor } = useBGColor();
