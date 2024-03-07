@@ -70,11 +70,7 @@ export default function ChannelDetails() {
 
   return (
     <>
-      <ScrollView
-        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={loadChannel} />}
-        flex={1}
-        bgColor={bgColor}
-      >
+      <Box refreshControl={<RefreshControl refreshing={isLoading} onRefresh={loadChannel} />} bgColor={bgColor}>
         {/* banner image */}
         {channelInfo?.banner_image && (
           <Image
@@ -103,17 +99,19 @@ export default function ChannelDetails() {
             <Text size="sm" color="$secondary300">
               {`@${channelInfo?.user_handle}`} | {`${channelInfo?.subscribers_count} subscribers`}
             </Text>
-            <TouchableOpacity onPress={openDescScreen}>
-              <Box flexDirection="row" alignItems="center" gap="$1">
-                <Text size="sm" numberOfLines={1} color="$secondary300">
-                  {/* {channelInfo?.desc} */}
-                  {channelInfo?.desc?.replace(/\n/g, " ")}
-                </Text>
-                <Button variant="link" action="secondary">
-                  <ButtonIcon as={ChevronRightIcon} />
-                </Button>
-              </Box>
-            </TouchableOpacity>
+            {channelInfo?.desc && (
+              <TouchableOpacity onPress={openDescScreen}>
+                <Box flexDirection="row" alignItems="center" gap="$1">
+                  <Text size="sm" numberOfLines={1} color="$secondary300">
+                    {/* {channelInfo?.desc} */}
+                    {channelInfo?.desc?.replace(/\n/g, " ")}
+                  </Text>
+                  <Button variant="link" action="secondary">
+                    <ButtonIcon as={ChevronRightIcon} />
+                  </Button>
+                </Box>
+              </TouchableOpacity>
+            )}
             {/* Links */}
             {channelInfo?.links?.length > 0 && (
               <TouchableOpacity onPress={() => setIsLinkSheetOpen(true)}>
@@ -144,10 +142,12 @@ export default function ChannelDetails() {
         </Box>
 
         {/* Subscriber Btn */}
-        <SubscribeChannelBtn channel={channelInfo} />
+        <Box px="$4">
+          <SubscribeChannelBtn channel={channelInfo} />
+        </Box>
 
         {/* Tabs: (Videos, Playlist) */}
-      </ScrollView>
+      </Box>
       <ChannelNavigator />
       <LinkSheet links={channelInfo?.links} isLinkSheetOpen={isLinkSheetOpen} setIsLinkSheetOpen={setIsLinkSheetOpen} />
     </>
