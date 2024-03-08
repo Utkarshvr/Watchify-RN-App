@@ -1,39 +1,76 @@
-import { Box, Button, Text, ButtonText, ScrollView } from "@gluestack-ui/themed";
-import { Link } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
+import { Button, ButtonText } from "@gluestack-ui/themed";
 import { useState } from "react";
-import { RefreshControl } from "react-native";
+import { Image } from "react-native";
 import axiosInstance from "../../utils/axiosInstance";
+import { Box } from "@gluestack-ui/themed";
 
 export default function rough() {
-  const [refreshing, setRefreshing] = useState(false);
+  const [imgUri, setImgUri] = useState(null);
+  console.log({ imgUri });
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
+  const uploadImgToServer = async () => {
+    const formData = new FormData();
+    formData.append("img", {
+      uri: imgUri,
+      name: imgUri?.split("/")[imgUri?.split("/")?.length - 1],
+      // type: "image",
+      type: `image/${imgUri.split(".").pop()}`,
+    });
+    console.log(formData);
+
+    const { data } = await axiosInstance.post("/upload-img", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    // const response = await fetch("https://watchifyserver.serveo.net/api/upload-img", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    //   body: formData,
+    // });
+
+    // const data = await response.json(); // Assuming the server returns JSON
+
+    console.log("::uploadImgToServer:: DATA:", data);
   };
 
-  const notifyMe = async () => {
-    await axiosInstance.get("/notify-me");
+  const selectImgFromGallery = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      const img = result.assets[0];
+      setImgUri(img?.uri);
+    }
   };
+
   return (
-    <ScrollView
-      flex={1}
-      bgColor="$secondary950"
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-    >
-      <Text>Rough Screen</Text>
-
-      <Link asChild href={"/playlist/HoLfQJpc75QZggiV"}>
-        <Button>
-          <ButtonText>Open Playlist</ButtonText>
+    <Box flex={1} bgColor="$secondary950" p="$4">
+      {!imgUri ? (
+        <Button onPress={selectImgFromGallery}>
+          <ButtonText>Select an Image</ButtonText>
         </Button>
-      </Link>
+      ) : (
+        <Box gap="$4">
+          <Image
+            source={{ uri: imgUri }}
+            style={{ width: "100%", height: 200, borderRadius: 8, borderWidth: 2, borderColor: "#333" }}
+          />
+          <Button onPress={selectImgFromGallery}>
+            <ButtonText>Change Image</ButtonText>
+          </Button>
 
-      <Button onPress={notifyMe}>
-        <ButtonText>Notify Me</ButtonText>
-      </Button>
-    </ScrollView>
+          <Button onPress={uploadImgToServer}>
+            <ButtonText>Upload to server</ButtonText>
+          </Button>
+        </Box>
+      )}
+    </Box>
   );
 }

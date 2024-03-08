@@ -1,12 +1,12 @@
-import { Toast, ToastDescription, ToastTitle, VStack, useToast } from "@gluestack-ui/themed";
+// import { Toast, ToastDescription, ToastTitle, VStack, useToast } from "@gluestack-ui/themed";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import LoadingOverlay from "./components/ui/LoadingOverlay";
-// import { useNotificationAPI } from "./context/NotificationContext";
+import { useNotificationAPI } from "./context/NotificationContext";
 
 export default function RealTimeNotifications({ children }) {
-  // const { openNotification, refreshNotifications } = useNotificationAPI();
-  const toast = useToast();
+  const { openNotification, refreshNotifications } = useNotificationAPI();
+  // const toast = useToast();
   const [isSocketConnected, setIsSocketConnected] = useState(false);
 
   useEffect(() => {
@@ -25,22 +25,8 @@ export default function RealTimeNotifications({ children }) {
     socket.on("notify-user", (notification) => {
       console.log("Received message:", notification);
       // Update your React component state or perform any other actions
-
-      toast.show({
-        placement: "bottom",
-        render: ({ id }) => {
-          const toastId = "toast-" + id;
-
-          return (
-            <Toast nativeID={toastId} action={"info"} variant={"accent"}>
-              <VStack space="xs">
-                <ToastTitle>{notification?.title}</ToastTitle>
-                <ToastDescription>{notification?.desc}</ToastDescription>
-              </VStack>
-            </Toast>
-          );
-        },
-      });
+      openNotification(notification, notification?.severity);
+      refreshNotifications();
     });
 
     // Cleanup the socket connection when the component unmounts

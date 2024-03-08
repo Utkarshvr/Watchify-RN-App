@@ -6,6 +6,7 @@ import AxiosInterceptor from "./Providers/AxiosInterceptor";
 import GluestackUIProvider from "./Providers/GluestackUIProvider";
 import CreatePlaylistModalProvider from "./Providers/CreatePlaylistModalProvider";
 import RealTimeNotifications from "./RealTimeNotifications";
+import UploadVideoProvider from "./Providers/UploadVideoProvider";
 import NotificationProvider from "./Providers/NotificationProvider";
 
 export default function RootLayout() {
@@ -13,15 +14,17 @@ export default function RootLayout() {
     <GluestackUIProvider>
       <AuthProvider>
         <AxiosInterceptor>
-          <CreatePlaylistModalProvider>
-            {/* <NotificationProvider> */}
-            <RealTimeNotifications>
-              <App>
-                <StackNavigator />
-              </App>
-            </RealTimeNotifications>
-            {/* </NotificationProvider> */}
-          </CreatePlaylistModalProvider>
+          <NotificationProvider>
+            <CreatePlaylistModalProvider>
+              <UploadVideoProvider>
+                <RealTimeNotifications>
+                  <App>
+                    <StackNavigator />
+                  </App>
+                </RealTimeNotifications>
+              </UploadVideoProvider>
+            </CreatePlaylistModalProvider>
+          </NotificationProvider>
         </AxiosInterceptor>
       </AuthProvider>
     </GluestackUIProvider>

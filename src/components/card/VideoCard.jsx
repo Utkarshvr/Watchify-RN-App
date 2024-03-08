@@ -9,6 +9,7 @@ import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { useAuthData } from "../../context/AuthContext";
+import { formatVideoDuration } from "../../utils/helpers";
 
 export default function VideoCard({ video, usage, size }) {
   const { textColor } = useBGColor();
@@ -35,21 +36,41 @@ export default function VideoCard({ video, usage, size }) {
         alignItems="center"
         justifyContent="center"
       >
-        <Image
-          source={{ uri: video?.thumbnail }}
-          alt="Thumbnail"
-          style={{
-            // width: "100%",
-            minWidth: size === "xs" ? 150 : "100%",
-            width: size === "xs" ? 150 : "100%",
-            height: size === "xs" ? 90 : 230,
-            minHeight: size === "xs" ? 90 : 230,
-            maxHeight: 230,
-            borderRadius: usage === "list" ? 12 : 0,
-          }}
-          objectFit="fill"
-          flex={0.05}
-        />
+        <Box position="relative">
+          <Image
+            source={{ uri: video?.thumbnail }}
+            alt="Thumbnail"
+            style={{
+              // width: "100%",
+              minWidth: size === "xs" ? 150 : "100%",
+              width: size === "xs" ? 150 : "100%",
+              height: size === "xs" ? 90 : 230,
+              minHeight: size === "xs" ? 90 : 230,
+              maxHeight: 230,
+              borderRadius: usage === "list" ? 12 : 0,
+            }}
+            objectFit="fill"
+            flex={0.05}
+          />
+          {video?.duration && (
+            <Box
+              position="absolute"
+              bottom={8}
+              right={8}
+              py="$0"
+              px="$1"
+              rounded={"$sm"}
+              alignItems="center"
+              justifyContent="center"
+              style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
+              flexDirection="row"
+            >
+              <Text size="xs" fontWeight="$bold">
+                {formatVideoDuration(video?.duration)}
+              </Text>
+            </Box>
+          )}
+        </Box>
 
         <Box p={"$2"} flex={0.95} gap={8} flexDirection="row">
           {/* Link to Channel */}

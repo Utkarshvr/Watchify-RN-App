@@ -10,15 +10,15 @@ export default function NotificationProvider({ children }) {
     console.log({ notification });
 
     toast.show({
-      placement: "bottom",
+      placement: "bottom left",
       render: ({ id }) => {
         const toastId = "toast-" + id;
 
         return (
           <Toast nativeID={toastId} action={action} variant={variant}>
             <VStack space="xs">
-              <ToastTitle>{notification?.title}</ToastTitle>
-              <ToastDescription>{notification?.desc}</ToastDescription>
+              <ToastTitle size="xs">{notification?.content || notification?.title}</ToastTitle>
+              {notification?.desc && <ToastDescription size="xs">{notification?.desc}</ToastDescription>}
             </VStack>
           </Toast>
         );

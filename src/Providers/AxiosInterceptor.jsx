@@ -12,7 +12,8 @@ const AxiosInterceptor = ({ children }) => {
     const fullfilledInterceptor = (response) => response;
 
     const errorInterceptor = async (error) => {
-      if ((error.response && error.response.status === 401) || error.response.status === 403) {
+      console.log({ AXIOS_ERROR: error });
+      if ((error?.response && error?.response?.status === 401) || error?.response?.status === 403) {
         // Reset the states
         reset();
 
