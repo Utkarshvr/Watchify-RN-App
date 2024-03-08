@@ -64,7 +64,7 @@ export default function index() {
     );
 
   return (
-    <Box flex={1} bgColor={bgColor} p={"$4"}>
+    <Box flex={1} gap="$2" bgColor={bgColor} p={"$4"}>
       <Box gap="$4">
         <Image
           source={
