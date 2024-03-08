@@ -1,4 +1,14 @@
-import { ArrowRightIcon, Box, Button, ButtonIcon, ButtonText, FlatList, Heading, Text } from "@gluestack-ui/themed";
+import {
+  ArrowRightIcon,
+  Box,
+  Button,
+  ButtonIcon,
+  ButtonText,
+  FlatList,
+  Heading,
+  ScrollView,
+  Text,
+} from "@gluestack-ui/themed";
 import useBGColor from "../../../hooks/useBGColor";
 import UserAvatar from "../../../components/ui/avatar/UserAvatar";
 import { useAuthData } from "../../../context/AuthContext";
@@ -55,8 +65,8 @@ export default function You() {
   }, [user, open, isNewPlaylistCreated]);
 
   return (
-    <Box flex={1} backgroundColor={bgColor} p={"$3"} gap={"$5"}>
-      <Box flexDirection="row" px={"$1"} justifyContent="space-between" alignItems="center">
+    <ScrollView flex={1} backgroundColor={bgColor} p={"$3"}>
+      <Box mb="$5" flexDirection="row" px={"$1"} justifyContent="space-between" alignItems="center">
         <Box flexDirection="row" gap={"$2"} alignItems="center">
           <UserAvatar size={72} />
           <Box>
@@ -80,7 +90,7 @@ export default function You() {
         <LogoutBtn showText={false} />
       </Box>
 
-      <Box gap="$1">
+      <Box mb="$5" gap="$1">
         <Box flexDirection="row" justifyContent="space-between" alignItems="center">
           <Heading>Your Playlists</Heading>
           {/* <Button variant="outline" size="xs" action="secondary" rounded={"$3xl"}>
@@ -127,6 +137,6 @@ export default function You() {
           )}
         </Box>
       </Box>
-    </Box>
+    </ScrollView>
   );
 }
