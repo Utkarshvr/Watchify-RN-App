@@ -84,7 +84,7 @@ export default function ChannelDetails() {
 
         {/* Channel Info Avatar, Name, (@handle | No. of Subscribers | No. of Videos), Descrp (Max Lines: 2), Links (Max: 1) */}
         <Box gap={"$1"} p="$4">
-          <Box gap={"$1"} justifyContent="center" alignItems="center">
+          <Box gap={"$4"} flexDirection="row" alignItems="center">
             {/* Touch to see the image in zoom */}
             <TouchableOpacity>
               <Image
@@ -95,10 +95,18 @@ export default function ChannelDetails() {
                 alt="User Avatar"
               />
             </TouchableOpacity>
-            <Heading>{channelInfo?.name}</Heading>
-            <Text size="sm" color="$secondary300">
-              {`@${channelInfo?.user_handle}`} | {`${channelInfo?.subscribers_count} subscribers`}
-            </Text>
+            <Box>
+              <Heading>{channelInfo?.name}</Heading>
+              <Text size="sm" color="$secondary300">
+                {`@${channelInfo?.user_handle}`} | {`${channelInfo?.subscribers_count} subscribers`}
+              </Text>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box px="$4" gap="$4">
+          <Box gap="$2">
+            {/* Desc */}
             {channelInfo?.desc && (
               <TouchableOpacity onPress={openDescScreen}>
                 <Box flexDirection="row" alignItems="center" gap="$1">
@@ -139,10 +147,7 @@ export default function ChannelDetails() {
               </TouchableOpacity>
             )}
           </Box>
-        </Box>
-
-        {/* Subscriber Btn */}
-        <Box px="$4">
+          {/* Subscriber Btn */}
           <SubscribeChannelBtn channel={channelInfo} />
         </Box>
 
