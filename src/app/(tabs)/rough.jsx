@@ -2,6 +2,7 @@ import { Box, Button, Text, ButtonText, ScrollView } from "@gluestack-ui/themed"
 import { Link } from "expo-router";
 import { useState } from "react";
 import { RefreshControl } from "react-native";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function rough() {
   const [refreshing, setRefreshing] = useState(false);
@@ -11,6 +12,10 @@ export default function rough() {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
+  };
+
+  const notifyMe = async () => {
+    await axiosInstance.get("/notify-me");
   };
   return (
     <ScrollView
@@ -25,6 +30,10 @@ export default function rough() {
           <ButtonText>Open Playlist</ButtonText>
         </Button>
       </Link>
+
+      <Button onPress={notifyMe}>
+        <ButtonText>Notify Me</ButtonText>
+      </Button>
     </ScrollView>
   );
 }
