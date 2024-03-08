@@ -8,6 +8,7 @@ import {
   Button,
   ButtonIcon,
   ChevronRightIcon,
+  EditIcon,
   Heading,
   Image,
   LinkText,
@@ -19,6 +20,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import LinkSheet from "../../../components/actionsheet/LinkSheet";
 import SubscribeChannelBtn from "../../../components/action/SubscribeChannelBtn";
 import ChannelNavigator from "../../../components/Navigators/ChannelNavigator";
+import { useAuthData } from "../../../context/AuthContext";
 
 export default function ChannelDetails() {
   const { channelID } = useLocalSearchParams();
@@ -27,8 +29,8 @@ export default function ChannelDetails() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [isLinkSheetOpen, setIsLinkSheetOpen] = useState(false);
-
   const { bgColor } = useBGColor();
+  const { user } = useAuthData();
 
   const loadChannel = async () => {
     if (isLoading || !channelID) return;
@@ -83,18 +85,15 @@ export default function ChannelDetails() {
         )}
 
         {/* Channel Info Avatar, Name, (@handle | No. of Subscribers | No. of Videos), Descrp (Max Lines: 2), Links (Max: 1) */}
-        <Box gap={"$1"} p="$4">
+        <Box gap={"$1"} p="$4" flexDirection="row" justifyContent="space-between">
           <Box gap={"$4"} flexDirection="row" alignItems="center">
-            {/* Touch to see the image in zoom */}
-            <TouchableOpacity>
-              <Image
-                source={{ uri: channelInfo?.picture || "" }}
-                borderRadius={999}
-                width={56}
-                height={56}
-                alt="User Avatar"
-              />
-            </TouchableOpacity>
+            <Image
+              source={{ uri: channelInfo?.picture || "" }}
+              borderRadius={999}
+              width={56}
+              height={56}
+              alt="User Avatar"
+            />
             <Box>
               <Heading>{channelInfo?.name}</Heading>
               <Text size="sm" color="$secondary300">
@@ -102,6 +101,16 @@ export default function ChannelDetails() {
               </Text>
             </Box>
           </Box>
+          {user?._id === channelInfo?._id && (
+            <Button
+              onPress={() => router.push("/channel-settings")}
+              rounded={"$full"}
+              variant="outline"
+              action="secondary"
+            >
+              <ButtonIcon as={EditIcon} />
+            </Button>
+          )}
         </Box>
 
         <Box px="$4" gap="$4">

@@ -77,6 +77,8 @@ const SearchHeader = ({ close, prevText }) => {
 export default function Header({ navigation, layout, options, route }) {
   const { bgColor } = useBGColor();
 
+  console.log({ navigation, layout, options, route });
+
   const canGoBack = navigation.canGoBack();
 
   const [isSearching, setIsSearching] = useState(false);
@@ -94,8 +96,12 @@ export default function Header({ navigation, layout, options, route }) {
         ? searchTextStudio
         : null;
 
-  // console.log({ currentScreen, searchTextStudio, searchTextHome });
-  // console.log({ prevText });
+  let screenName;
+  if (route?.name?.startsWith("channel-settings")) screenName = "Channel Settings";
+  else if (route?.name?.startsWith("you")) screenName = "You";
+  else if (route?.name?.startsWith("studio")) screenName = "Studio";
+  else if (route?.name?.startsWith("subscriptions")) screenName = "Subscription";
+
   return (
     <Box
       gap={"$2"}
@@ -110,18 +116,21 @@ export default function Header({ navigation, layout, options, route }) {
         <SearchHeader close={closeSearchHeader} prevText={prevText} />
       ) : (
         <>
-          {canGoBack ? (
-            <IconBtn
-              noPadding
-              iconSize={24}
-              variant="link"
-              size="md"
-              onPress={() => navigation.goBack()}
-              name={"chevron-back"}
-            />
-          ) : (
-            <Logo />
-          )}
+          <Box flexDirection="row" gap="$2" alignItems="center">
+            {canGoBack ? (
+              <IconBtn
+                noPadding
+                iconSize={24}
+                variant="link"
+                size="md"
+                onPress={() => navigation.goBack()}
+                name={"chevron-back"}
+              />
+            ) : (
+              <Logo />
+            )}
+            <Text>{screenName}</Text>
+          </Box>
           <Box flexDirection="row" gap="$4" alignItems="center">
             <UserNotificationBtn />
             <Button onPress={() => setIsSearching(true)} rounded="$full" size="xl" variant="link" action="secondary">
