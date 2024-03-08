@@ -7,6 +7,10 @@ export async function openLoginUrl() {
   await WebBrowser.openBrowserAsync(`${API_URL}/auth/google?source=mobile`);
 }
 
+export async function openUrl(url) {
+  await WebBrowser.openBrowserAsync(url);
+}
+
 export const handleOpenURL = async (url) => {
   try {
     console.log({ url });

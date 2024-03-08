@@ -18,6 +18,7 @@ import IconBtn from "../Button/IconBtn";
 import { useEffect, useState } from "react";
 import { Text } from "@gluestack-ui/themed";
 import { router, useGlobalSearchParams, useNavigation } from "expo-router";
+import UserNotificationBtn from "../Button/UserNotificationBtn";
 
 const SearchHeader = ({ close, prevText }) => {
   const { bgColor } = useBGColor();
@@ -121,26 +122,9 @@ export default function Header({ navigation, layout, options, route }) {
           ) : (
             <Logo />
           )}
-          {/* {prevText && (
-            <TouchableOpacity style={{ flex: 1 }} onPress={() => setIsSearching(true)}>
-              <Input flex={1} variant="outline" py={"$0.5"} isReadOnly size="sm">
-                <InputField numberOfLines={1} placeholder="Search Watchify" value={prevText} />
-              </Input>
-            </TouchableOpacity>
-          )} */}
           <Box flexDirection="row" gap="$4" alignItems="center">
-            <Button rounded="$full" size="xl" variant="link" action="secondary">
-              <ButtonIcon as={BellIcon} />
-            </Button>
-            <Button
-              // onPress={() => router.push("/(tabs)/search")}
-              // onPress={() => navigation.navigate("search")}
-              onPress={() => setIsSearching(true)}
-              rounded="$full"
-              size="xl"
-              variant="link"
-              action="secondary"
-            >
+            <UserNotificationBtn />
+            <Button onPress={() => setIsSearching(true)} rounded="$full" size="xl" variant="link" action="secondary">
               <ButtonIcon as={SearchIcon} />
             </Button>
 

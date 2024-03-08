@@ -101,14 +101,12 @@ export default function index() {
             </Box>
           </Box>
         </Box>
-        <Box>
-          <FlatList
-            data={playlist?.videos}
-            keyExtractor={(vid) => vid?._id}
-            renderItem={({ item }) => <VideoCard video={item} usage={"list"} size="xs" />}
-          />
-        </Box>
       </Box>
+      <FlatList
+        data={playlist?.videos}
+        keyExtractor={(vid) => vid?._id}
+        renderItem={({ item }) => <VideoCard video={item} usage={"list"} size="xs" />}
+      />
     </Box>
   );
 }
