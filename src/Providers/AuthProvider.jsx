@@ -31,8 +31,7 @@ export default function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    let a = true;
-    if (a) {
+    if (authToken) {
       setIsLoading(true);
       axiosInstance
         .get(getUserRoute)
