@@ -10,6 +10,8 @@ export default function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [authToken, setAuthToken] = useState(null);
 
+  const [shouldRetry, setShouldRetry] = useState(true);
+
   const api = useMemo(() => {
     const reset = () => {
       setUser(null);
@@ -31,13 +33,16 @@ export default function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (authToken) {
+    console.log({ authToken, shouldRetry });
+    if (authToken && shouldRetry) {
       setIsLoading(true);
+      console.log("🚀🚀🚀 TRYING TO FETCH THE USER 🚀🚀🚀");
       axiosInstance
         .get(getUserRoute)
         .then(({ data }) => {
           console.log("👽👽👽👽👽 GOT THE USER 👽👽👽👽👽");
           setUser(data?.data?.user);
+          setShouldRetry(false);
         })
         .catch((error) => {
           console.log({ ERROR_IN_AUTH_PROVIDERR: error });
@@ -48,20 +53,27 @@ export default function AuthProvider({ children }) {
             (error?.response?.status === 401 || error?.response?.status === 403)
           ) {
             console.log("AUTH_TOKEN: REMOVED❌");
+            setShouldRetry(false);
+
             // Reset the states
             api.reset();
 
             // // Send back the user to index page
             // router.replace("/");
           } else {
+            setTimeout(() => {
+              console.log("WILL TRY AGAIN IN ~ 2s 🙂🙂");
+              setShouldRetry(Math.random());
+            }, 2000);
             console.log("AUTH_TOKEN: UNTOUCHED");
           }
         })
         .finally(() => setIsLoading(false));
     } else {
-      console.log("Auth Token not present. Therefore, Not fetching user");
+      if (!authToken) console.log("Auth Token not present. Therefore, Not fetching user");
+      if (shouldRetry === false) console.log("There's no need to retry fetching the user");
     }
-  }, [authToken]);
+  }, [authToken, shouldRetry]);
 
   return (
     <>
