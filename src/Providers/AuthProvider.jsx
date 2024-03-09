@@ -31,7 +31,8 @@ export default function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (authToken) {
+    let a = true;
+    if (a) {
       setIsLoading(true);
       axiosInstance
         .get(getUserRoute)
@@ -39,7 +40,24 @@ export default function AuthProvider({ children }) {
           console.log("👽👽👽👽👽 GOT THE USER 👽👽👽👽👽");
           setUser(data?.data?.user);
         })
-        .catch(api.reset)
+        .catch((error) => {
+          console.log({ ERROR_IN_AUTH_PROVIDERR: error });
+
+          if (
+            error?.config?.url?.includes(getUserRoute) &&
+            error?.response &&
+            (error?.response?.status === 401 || error?.response?.status === 403)
+          ) {
+            console.log("AUTH_TOKEN: REMOVED❌");
+            // Reset the states
+            api.reset();
+
+            // // Send back the user to index page
+            // router.replace("/");
+          } else {
+            console.log("AUTH_TOKEN: UNTOUCHED");
+          }
+        })
         .finally(() => setIsLoading(false));
     } else {
       console.log("Auth Token not present. Therefore, Not fetching user");

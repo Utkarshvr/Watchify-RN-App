@@ -20,11 +20,14 @@ const AxiosInterceptor = ({ children }) => {
         error?.response &&
         (error?.response?.status === 401 || error?.response?.status === 403)
       ) {
+        console.log("AUTH_TOKEN: REMOVED");
         // Reset the states
         reset();
 
         // Send back the user to index page
         router.replace("/");
+      } else {
+        console.log("AUTH_TOKEN: UNTOUCHED");
       }
 
       if (
