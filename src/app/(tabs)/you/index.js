@@ -67,23 +67,25 @@ export default function You() {
   return (
     <ScrollView flex={1} backgroundColor={bgColor} p={"$3"}>
       <Box mb="$5" flexDirection="row" px={"$1"} justifyContent="space-between" alignItems="center">
-        <Box flexDirection="row" gap={"$2"} alignItems="center">
-          <UserAvatar size={72} />
+        <Box flex={1} flexDirection="row" gap={"$2"} alignItems="center">
+          <UserAvatar size={54} />
           <Box>
-            <Heading>{user?.name}</Heading>
-            <Box flexDirection="row" gap={"$2"}>
-              <Text size="xs">@{user?.user_handle}</Text>
-              <Text color="$secondary400" size="xs">
-                |
-              </Text>
-              <TouchableOpacity onPress={navigateToChannel}>
-                <Box flexDirection="row" gap={"$0.5"} alignItems="center" justifyContent="center">
-                  <Text color="$secondary400" size="xs">
-                    View Channel
-                  </Text>
-                  <ButtonIcon as={ArrowRightIcon} color="$secondary400" size="xs" />
-                </Box>
-              </TouchableOpacity>
+            <Text fontWeight="$extrabold" fontSize={16}>{user?.name}</Text>
+            <Box flexWrap="wrap" flexDirection="row" gap={"$1"}>
+              <Text size="xs" fontSize={10}>@{user?.user_handle}</Text>
+              <Box flexDirection="row" gap="$1">
+                <Text color="$secondary400" size="xs">
+                  |
+                </Text>
+                <TouchableOpacity onPress={navigateToChannel}>
+                  <Box flexDirection="row" gap={"$0.5"} alignItems="center" justifyContent="center">
+                    <Text color="$secondary400" size="xs">
+                      View Channel
+                    </Text>
+                    <ButtonIcon as={ArrowRightIcon} color="$secondary400" size="xs" />
+                  </Box>
+                </TouchableOpacity>
+              </Box>
             </Box>
           </Box>
         </Box>
