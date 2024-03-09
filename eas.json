@@ -8,7 +8,9 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_API_URL": "https://watchify-server-react-native.onrender.com/api",
-        "EXPO_PUBLIC_APP_NAME": "Watchify"
+        "EXPO_PUBLIC_API_URL_ROOT": "https://watchify-server-react-native.onrender.com",
+        "EXPO_PUBLIC_APP_NAME": "Watchify",
+        "EXPO_PUBLIC_WEBSITE_BASE_URL": "https://watchify-client.vercel.app"
       }
     },
     "preview": {
@@ -21,17 +23,25 @@
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://watchify-server-react-native.onrender.com/api",
-        "EXPO_PUBLIC_APP_NAME": "Watchify"
+        "EXPO_PUBLIC_API_URL_ROOT": "https://watchify-server-react-native.onrender.com",
+        "EXPO_PUBLIC_APP_NAME": "Watchify",
+        "EXPO_PUBLIC_WEBSITE_BASE_URL": "https://watchify-client.vercel.app"
       }
     },
     "production": {
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://watchify-server-react-native.onrender.com/api"
+        "EXPO_PUBLIC_API_URL": "https://watchify-server-react-native.onrender.com/api",
+        "EXPO_PUBLIC_API_URL_ROOT": "https://watchify-server-react-native.onrender.com",
+        "EXPO_PUBLIC_APP_NAME": "Watchify",
+        "EXPO_PUBLIC_WEBSITE_BASE_URL": "https://watchify-client.vercel.app"
       }
     },
     "test": {
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://watchify-server-react-native.onrender.com/api"
+        "EXPO_PUBLIC_API_URL": "https://watchify-server-react-native.onrender.com/api",
+        "EXPO_PUBLIC_API_URL_ROOT": "https://watchify-server-react-native.onrender.com",
+        "EXPO_PUBLIC_APP_NAME": "Watchify",
+        "EXPO_PUBLIC_WEBSITE_BASE_URL": "https://watchify-client.vercel.app"
       }
     }
   },
