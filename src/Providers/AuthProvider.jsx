@@ -11,6 +11,7 @@ export default function AuthProvider({ children }) {
   const [authToken, setAuthToken] = useState(null);
 
   const [shouldRetry, setShouldRetry] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
 
   const api = useMemo(() => {
     const reset = () => {
@@ -61,14 +62,20 @@ export default function AuthProvider({ children }) {
             // // Send back the user to index page
             // router.replace("/");
           } else {
-            setTimeout(() => {
-              console.log("WILL TRY AGAIN IN ~ 2s 🙂🙂");
-              setShouldRetry(Math.random());
-            }, 2000);
+            {
+              retryCount <= 4 &&
+                setTimeout(() => {
+                  console.log("WILL TRY AGAIN IN ~ 2s 🙂🙂");
+                  setShouldRetry(Math.random());
+                }, 2000);
+            }
             console.log("AUTH_TOKEN: UNTOUCHED");
           }
         })
-        .finally(() => setIsLoading(false));
+        .finally(() => {
+          setIsLoading(false);
+          setRetryCount((prev) => prev + 1);
+        });
     } else {
       setIsLoading(false);
       if (!authToken) console.log("Auth Token not present. Therefore, Not fetching user");
