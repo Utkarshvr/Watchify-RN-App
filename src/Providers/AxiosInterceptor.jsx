@@ -5,6 +5,7 @@ import axiosInstance from "../utils/axiosInstance";
 import { useAuthAPI } from "../context/AuthContext";
 import PropTypes from "prop-types";
 import { getUserRoute } from "../utils/api/api.routes";
+import { openLoginUrl } from "../utils/api/apiCalls";
 
 const AxiosInterceptor = ({ children }) => {
   const { reset } = useAuthAPI();
@@ -25,6 +26,13 @@ const AxiosInterceptor = ({ children }) => {
         // Send back the user to index page
         router.replace("/");
       }
+
+      if (
+        !error?.config?.url?.includes(getUserRoute) &&
+        (error?.response?.status === 401 || error?.response?.status === 403)
+      )
+        return openLoginUrl();
+
       return Promise.reject(error);
     };
 
