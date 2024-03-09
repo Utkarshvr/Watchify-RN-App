@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import axiosInstance from "../utils/axiosInstance";
 import { useAuthAPI } from "../context/AuthContext";
 import PropTypes from "prop-types";
+import { getUserRoute } from "../utils/api/api.routes";
 
 const AxiosInterceptor = ({ children }) => {
   const { reset } = useAuthAPI();
@@ -13,7 +14,11 @@ const AxiosInterceptor = ({ children }) => {
 
     const errorInterceptor = async (error) => {
       console.log({ AXIOS_ERROR: error });
-      if ((error?.response && error?.response?.status === 401) || error?.response?.status === 403) {
+      if (
+        error?.config?.url?.includes(getUserRoute) &&
+        error?.response &&
+        (error?.response?.status === 401 || error?.response?.status === 403)
+      ) {
         // Reset the states
         reset();
 

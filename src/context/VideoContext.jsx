@@ -15,7 +15,8 @@ export const VideoContextData = createContext({
 export const VideoContextAPI = createContext({
   setVideo: () => {},
   setIsLoading: () => {},
-
+  
+  loadVideo: () => {},
   reset: () => {},
 });
 

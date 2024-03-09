@@ -34,7 +34,7 @@ export default function VideoProvider({ children, videoID }) {
       setIsLoading(false);
     };
 
-    return { setVideo, setIsLoading, reset };
+    return { setVideo, setIsLoading, reset, loadVideo };
   }, []);
 
   useEffect(() => {

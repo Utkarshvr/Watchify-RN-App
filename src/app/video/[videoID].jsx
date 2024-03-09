@@ -13,7 +13,7 @@ import VideoDescSheet from "../../components/actionsheet/VideoDescSheet";
 import VideoComments from "../../components/VideoComments";
 import CommentsProvider from "../../Providers/CommentsProvider";
 import VideoProvider from "../../Providers/VideoProvider";
-import { useVideoData } from "../../context/VideoContext";
+import { useVideoAPI, useVideoData } from "../../context/VideoContext";
 import ErrorScreen from "../../components/ui/ErrorScreen";
 import SubscribeChannelBtn from "../../components/action/SubscribeChannelBtn";
 
@@ -34,6 +34,7 @@ export default function MainProviderWrapper() {
 
 export function VideoScreen() {
   const { video, isLoading, isInitialLoadDone } = useVideoData();
+  const { loadVideo } = useVideoAPI();
 
   const [isDescSheetOpen, setIsDescSheetOpen] = useState(false);
 
@@ -50,7 +51,7 @@ export function VideoScreen() {
       </Box>
     );
 
-  if (isInitialLoadDone && !isLoading && !video) return <ErrorScreen msg="Video not found" />;
+  if (isInitialLoadDone && !isLoading && !video) return <ErrorScreen msg="Video not found" showRetryBtn onRetry={loadVideo} />;
 
   return (
     <Box flex={1} bgColor={bgColor}>
