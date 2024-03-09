@@ -9,7 +9,7 @@ import { useAuthAPI, useAuthData } from "../../context/AuthContext";
 export default function LoginBtn({ onLogin = openLoginUrl, showText = true }) {
   const { textColor } = useBGColor();
 
-  const { setIsLoading } = useAuthAPI();
+  const { setIsLoading, setShouldRetry } = useAuthAPI();
   const { isAuth } = useAuthData();
 
   if (isAuth) return;
@@ -24,6 +24,7 @@ export default function LoginBtn({ onLogin = openLoginUrl, showText = true }) {
       variant="outline"
       onPress={() => {
         setIsLoading(true);
+        setShouldRetry(true);
         onLogin();
       }}
     >

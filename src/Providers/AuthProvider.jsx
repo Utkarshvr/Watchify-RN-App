@@ -21,7 +21,7 @@ export default function AuthProvider({ children }) {
       logoutUser();
     };
 
-    return { setAuthToken, setUser, setIsLoading, reset };
+    return { setAuthToken, setUser, setIsLoading, reset, setShouldRetry };
   }, []);
 
   useEffect(() => {
@@ -70,6 +70,7 @@ export default function AuthProvider({ children }) {
         })
         .finally(() => setIsLoading(false));
     } else {
+      setIsLoading(false);
       if (!authToken) console.log("Auth Token not present. Therefore, Not fetching user");
       if (shouldRetry === false) console.log("There's no need to retry fetching the user");
     }

@@ -12,6 +12,7 @@ export const AuthContextAPI = createContext({
   setUser: () => {},
   setIsLoading: () => {},
 
+  setShouldRetry: () => {},
   reset: () => {},
 });
 
