@@ -38,23 +38,24 @@ Before you begin, ensure you have met the following requirements:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/Watchify.git
-   cd Watchify
+   git clone https://github.com/Utkarshvr/Watchify-RN-App
+   cd Watchify-RN-App
    ```
 
 2. **Install dependencies for the frontend:**
    ```bash
-   cd frontend
    npm install
    ```
 
 3. **Install dependencies for the backend:**
+   Clone the [Watchify Server Repo](https://github.com/Utkarshvr/watchify-server-react_native)
    ```bash
-   cd ../backend
+   git clone https://github.com/Utkarshvr/watchify-server-react_native
+   cd watchify-server-react_native
    npm install
    ```
 
-4. **Set up environment variables:**
+5. **Set up environment variables:**
    Create a `.env` file in the `backend` directory and add the following:
    ```env
    PORT=5000
@@ -70,15 +71,13 @@ Before you begin, ensure you have met the following requirements:
 ### Running the Application
 
 1. **Start the backend server:**
-   Clone the [Watchify Server Repo](https://github.com/Utkarshvr/watchify-server-react_native)
-   ```
-   npm install
+
+   ```bash
    npm start
    ```
 
 2. **Start the frontend:**
-   ```
-   npm install
+   ```bash
    npm start
    ```
 
