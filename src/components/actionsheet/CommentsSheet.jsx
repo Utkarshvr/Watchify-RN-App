@@ -31,14 +31,15 @@ export default function CommentsSheet({ setIsSheetOpen, isSheetOpen }) {
   return (
     <Actionsheet
       isKeyboardDismissable={true}
-      snapPoints={[95]}
+      snapPoints={[25, 50, 75]}
+      // snapPoints={["25%", "50%", "75%"]}
       flex={1}
       isOpen={isSheetOpen}
       onClose={handleClose}
       zIndex={999}
     >
       <ActionsheetBackdrop />
-      <ActionsheetContent w={"$full"} h={windowHeight > 840 ? 840 : windowHeight} zIndex={999}>
+      <ActionsheetContent w={"$full"} zIndex={999}>
         <ActionsheetDragIndicatorWrapper>
           <ActionsheetDragIndicator />
         </ActionsheetDragIndicatorWrapper>
