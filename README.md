@@ -1,97 +1,265 @@
-# Watchify
+# 🎬 Watchify
 
-Welcome to **Watchify** – a dynamic video streaming platform designed for seamless entertainment experiences. Whether you're looking to explore a vast library of content, engage with your favorite videos, or connect with fellow enthusiasts, Watchify has you covered. With an intuitive interface and personalized features, Watchify elevates your streaming experience to new heights.
+> A full-stack video-sharing platform built with React Native, Expo, Express, MongoDB, Socket.io, and Cloudinary.
 
-## Features
+<p align="center">
+  <img src="https://res.cloudinary.com/di7b9ifgh/image/upload/v1711125195/Watchify_Mockup_Screen_1_ceebd10dd3.png" alt="Watchify" width="850"/>
+</p>
 
-- **Google Login Integration**: Hassle-free access with secure Google authentication.
-- **Video Uploads**: Easily upload your videos and share them with the community.
-- **Playlist Creation**: Curate and manage your own playlists to organize your favorite content.
-- **Social Sharing**: Share your favorite videos with friends and followers on various social media platforms.
-- **Vast Content Library**: Explore a diverse range of multimedia content across different genres.
-- **Engagement Tools**: Like, comment, and interact with videos and other users.
+<p align="center">
+  <a href="https://www.youtube.com/shorts/V-HrVVhi1no"
+     style="display:inline-block; padding:14px 30px; border-radius:14px; background:#111827; color:#ffffff; font-size:16px; font-weight:700; text-decoration:none; border:1px solid #374151;">
+    ▶&nbsp;&nbsp; Watch the Demo
+  </a>
+</p>
 
-## Technologies Used
+---
 
-- **Frontend**: 
-  - [React Native](https://reactnative.dev/)
-  - [Expo](https://expo.dev/)
-  - [TypeScript](https://www.typescriptlang.org/)
-  - [Gluestack UI Library](https://gluestack.io/)
+## 💡 About Watchify
 
-- **Backend**: 
-  - [ExpressJS](https://expressjs.com/)
-  - [MongoDB](https://www.mongodb.com/)
-  - [Socket.io](https://socket.io/)
-  - [Cloudinary](https://cloudinary.com/)
+**Watchify** is a full-stack video-sharing application built from the ground up as a hands-on exploration of modern mobile and backend development.
 
-## Getting Started
+The app allows users to discover and interact with video content, upload their own videos, create playlists, and engage with other users through likes, comments, and sharing.
+
+Rather than being just a UI prototype, Watchify includes a dedicated backend, database, cloud media storage, authentication, and real-time communication.
+
+---
+
+## ✨ Features
+
+### 🔐 Google Authentication
+
+Sign in using Google for a simple and secure authentication experience.
+
+### 🎥 Video Uploads
+
+Upload videos and make them available to other users through the platform.
+
+### 📚 Playlists
+
+Create and manage custom playlists to organize your favorite content.
+
+### ❤️ Social Interactions
+
+Like, comment on, and share videos with other users.
+
+### ⚡ Real-time Communication
+
+Uses **Socket.io** to enable real-time functionality between the mobile application and backend.
+
+### ☁️ Cloud Media Storage
+
+Video and media assets are handled through **Cloudinary** rather than being stored directly on the application server.
+
+### 📱 Cross-platform Mobile App
+
+Built with **React Native + Expo**, allowing the application to run across supported mobile platforms.
+
+---
+
+## 🏗️ Architecture
+
+Watchify is split into a mobile client and a dedicated backend service.
+
+```text
+                       ┌─────────────────────┐
+                       │       Watchify      │
+                       │    React Native     │
+                       │       + Expo        │
+                       └──────────┬──────────┘
+                                  │
+                         REST API / Socket.io
+                                  │
+                                  ▼
+                       ┌─────────────────────┐
+                       │   Express Backend   │
+                       └──────────┬──────────┘
+                                  │
+                ┌─────────────────┼─────────────────┐
+                │                 │                 │
+                ▼                 ▼                 ▼
+          ┌──────────┐      ┌───────────┐     ┌───────────┐
+          │ MongoDB  │      │ Cloudinary│     │ Socket.io │
+          │ Database │      │   Media   │     │ Real-time │
+          └──────────┘      └───────────┘     └───────────┘
+```
+
+### Components
+
+**Mobile**
+
+* React Native
+* Expo
+* TypeScript
+* Gluestack UI
+
+**Backend**
+
+* Node.js
+* Express
+* MongoDB
+* Socket.io
+* Cloudinary
+* JWT authentication
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer              | Technologies                   |
+| ------------------ | ------------------------------ |
+| **Mobile**         | React Native, Expo, TypeScript |
+| **UI**             | Gluestack UI                   |
+| **Backend**        | Node.js, Express               |
+| **Database**       | MongoDB                        |
+| **Real-time**      | Socket.io                      |
+| **Media Storage**  | Cloudinary                     |
+| **Authentication** | Google OAuth, JWT              |
+
+---
+
+## 🎥 Demo
+
+Watch the application in action:
+
+<p align="center">
+  <a href="https://www.youtube.com/shorts/V-HrVVhi1no">
+    <img src="https://res.cloudinary.com/di7b9ifgh/image/upload/v1711125182/Watchify_Mockup_Screen_2_39ab387f3f.png" alt="Watch Watchify Demo" width="750"/>
+  </a>
+</p>
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-Before you begin, ensure you have met the following requirements:
+Make sure you have:
 
-- Node.js and npm installed. You can download them from [here](https://nodejs.org/).
-- MongoDB installed. You can download it from [here](https://www.mongodb.com/try/download/community).
+* Node.js and npm
+* MongoDB
+* Expo development environment
+* A Google OAuth application
+* A Cloudinary account
 
-### Installation
+### 1. Clone the mobile application
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Utkarshvr/Watchify-RN-App
-   cd Watchify-RN-App
-   ```
+```bash
+git clone https://github.com/Utkarshvr/Watchify-RN-App.git
+cd Watchify-RN-App
+```
 
-2. **Install dependencies for the frontend:**
-   ```bash
-   npm install
-   ```
+### 2. Install dependencies
 
-3. **Install dependencies for the backend:**
-   Clone the [Watchify Server Repo](https://github.com/Utkarshvr/watchify-server-react_native)
-   ```bash
-   git clone https://github.com/Utkarshvr/watchify-server-react_native
-   cd watchify-server-react_native
-   npm install
-   ```
+```bash
+npm install
+```
 
-5. **Set up environment variables:**
-   Create a `.env` file in the `backend` directory and add the following:
-   ```env
-   PORT=5000
-   MONGODB_URI=your_mongodb_connection_string
-   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-   CLOUDINARY_API_KEY=your_cloudinary_api_key
-   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   JWT_SECRET=your_jwt_secret
-   ```
+### 3. Clone the backend
 
-### Running the Application
+The backend is maintained in a separate repository:
 
-1. **Start the backend server:**
+```bash
+git clone https://github.com/Utkarshvr/watchify-server-react_native.git
+cd watchify-server-react_native
+npm install
+```
 
-   ```bash
-   npm start
-   ```
+### 4. Configure environment variables
 
-2. **Start the frontend:**
-   ```bash
-   npm start
-   ```
+Create a `.env` file in the backend and configure:
 
-3. **Open the Expo app on your mobile device and scan the QR code** to view the application.
+```env
+PORT=5000
 
-## Usage
+MONGODB_URI=your_mongodb_connection_string
 
-- **Google Login**: Use your Google account to log in securely.
-- **Upload Videos**: Navigate to the upload section to share your content.
-- **Create Playlists**: Organize videos into playlists for easy access.
-- **Explore and Engage**: Browse through the content library, like, comment, and share videos.
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-## Contact
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 
-Utkarsh Verma - [utkarshv995@gmail.com](mailto:utkarshv995@gmail.com) - [LinkedIn](https://www.linkedin.com/in/utkarsh-verma-8965a7246/)
+JWT_SECRET=your_jwt_secret
+```
 
-Project Link: [https://github.com/Utkarshvr/Watchify-RN-App](https://github.com/Utkarshvr/Watchify-RN-App)
+> ⚠️ Never commit real API keys, passwords, tokens, or private credentials to the repository.
+
+### 5. Start the backend
+
+```bash
+npm start
+```
+
+### 6. Start the Expo application
+
+From the mobile application directory:
+
+```bash
+npm start
+```
+
+Then open the project using Expo Go, an Android emulator, or an iOS simulator.
+
+---
+
+## 📱 Using Watchify
+
+Once the application is running, you can:
+
+1. **Sign in** using Google
+2. **Explore** available videos
+3. **Upload** your own content
+4. **Create playlists**
+5. **Like and comment** on videos
+6. **Share** content with others
+
+---
+
+## 🧠 What I Learned
+
+Building Watchify gave me practical experience with the challenges involved in developing a full-stack mobile application.
+
+Some of the things I explored:
+
+* Structuring a React Native application
+* Building and consuming REST APIs
+* Authentication and authorization
+* MongoDB data modeling
+* Handling media uploads with Cloudinary
+* Real-time communication with Socket.io
+* Connecting a mobile client to a dedicated backend
+* Managing frontend and backend development as separate projects
+
+---
+
+## 🌱 Open Source
+
+Watchify is publicly available for anyone interested in exploring the implementation.
+
+Feel free to:
+
+* ⭐ Star the repository
+* 🍴 Fork it
+* 🐛 Report issues
+* 💡 Suggest improvements
+* 🔧 Submit pull requests
+
+---
+
+## 👨‍💻 About
+
+Built by **Utkarsh Verma**.
+
+I'm a developer interested in building web, mobile, and AI products — from the initial idea and interface design all the way to development and deployment.
+
+**Portfolio:** https://uvcodes.vercel.app
+
+**GitHub:** https://github.com/Utkarshvr
+
+---
+
+## 📄 License
+
+See the `LICENSE` file for details.
